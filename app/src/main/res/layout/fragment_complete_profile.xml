@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".vvm.destination.CompleteProfileFragment">
+    <!-- Back Arrow -->
+    <ImageView
+        android:id="@+id/f_complete_profile_iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Complete Profile Header -->
+    <TextView
+        android:id="@+id/f_complete_profile_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/segoeui_font"
+        android:text="@string/complete_profile_header"
+        android:textColor="@color/colorHeaderBlackRussian"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/f_complete_profile_iv_back"
+        app:layout_constraintTop_toTopOf="@id/f_complete_profile_iv_back" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@id/f_complete_profile_tv_title"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- Business Name Input Field-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/f_complete_profile_til_business_name"
+                style="@style/customOutLinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginStart="50dp"
+                android:hint="@string/hint_business_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/f_complete_profile_tiet_business_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPlaceholderLightGrey" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!-- Email Input Field-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/f_complete_profile_til_email_address"
+                style="@style/customOutLinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:hint="@string/hint_email"
+                app:layout_constraintEnd_toEndOf="@id/f_complete_profile_til_business_name"
+                app:layout_constraintStart_toStartOf="@id/f_complete_profile_til_business_name"
+                app:layout_constraintTop_toBottomOf="@id/f_complete_profile_til_business_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/f_complete_profile_tiet_email_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPlaceholderLightGrey" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!-- Category TextView -->
+            <TextView
+                android:id="@+id/f_complete_profile_tv_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/segoeui_font"
+                android:text="@string/categories"
+                android:textColor="@color/colorSubHeaderSummerSky"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@id/f_complete_profile_til_business_name"
+                app:layout_constraintTop_toBottomOf="@id/f_complete_profile_til_email_address" />
+            <!-- Categories RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/f_complete_profile_rv_categories"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="@id/f_complete_profile_til_business_name"
+                app:layout_constraintStart_toStartOf="@id/f_complete_profile_til_business_name"
+                app:layout_constraintTop_toBottomOf="@id/f_complete_profile_tv_categories"
+                tools:listitem="@layout/item_summer_sky_chip" />
+            <!-- Logo TextView -->
+            <TextView
+                android:id="@+id/f_complete_profile_tv_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/segoeui_font"
+                android:text="@string/logo"
+                android:textColor="@color/colorSubHeaderSummerSky"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@id/f_complete_profile_til_business_name"
+                app:layout_constraintTop_toBottomOf="@id/f_complete_profile_rv_categories" />
+            <!-- Business Logo -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/f_complete_profile_civ_logo"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:src="@drawable/ic_profile_avatar"
+                app:civ_border_width="2dp"
+                android:layout_marginTop="5dp"
+                app:civ_border_color="#FF000000"
+                app:layout_constraintStart_toStartOf="@id/f_complete_profile_til_business_name"
+                app:layout_constraintTop_toBottomOf="@id/f_complete_profile_tv_logo" />
+            <!-- Government Issued Number TextView -->
+            <TextView
+                android:id="@+id/f_complete_profile_tv_government_issued_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/segoeui_font"
+                android:text="@string/government_issued_id"
+                android:textColor="@color/colorSubHeaderSummerSky"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@id/f_complete_profile_til_business_name"
+                app:layout_constraintTop_toBottomOf="@id/f_complete_profile_civ_logo" />
+            <!-- Government Issued Number Image -->
+            <ImageView
+                android:id="@+id/f_complete_profile_iv_government_issued_id"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_image"
+                app:layout_constraintStart_toStartOf="@id/f_complete_profile_til_business_name"
+                app:layout_constraintTop_toBottomOf="@id/f_complete_profile_tv_government_issued_id" />
+            <!-- Government Issued Id -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/f_complete_profile_til_government_issued_id"
+                style="@style/customOutLinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="25dp"
+                android:hint="@string/hint_government_issued_number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/f_complete_profile_til_business_name"
+                app:layout_constraintTop_toBottomOf="@id/f_complete_profile_iv_government_issued_id">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/f_complete_profile_tiet_government_issued_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPlaceholderLightGrey" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--  Submit for Verification Button  -->
+            <Button
+                android:id="@+id/f_complete_profile_btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/blue_gradient_rounded_corners"
+                android:enabled="false"
+                android:fontFamily="@font/segoeui_bold_font"
+                android:paddingStart="50dp"
+                android:paddingEnd="50dp"
+                android:text="@string/submit_for_verification_button"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/f_complete_profile_til_government_issued_id" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="5dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorWhite">
+
+    <TextView
+        android:id="@+id/item_blue_chip_tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Chip Item"
+        android:textColor="@color/colorBorderSummerSky"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:background="@drawable/summer_sky_blue_chip" />
+
+</FrameLayout>

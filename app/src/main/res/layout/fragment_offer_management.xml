@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".vvm.destination.OfferManagementFragment">
+
+    <!-- Offer Management Header -->
+    <TextView
+        android:id="@+id/f_offer_management_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/segoeui_font"
+        android:textColor="@color/colorHeaderBlack"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/offer_edit_header" />
+    <!-- Pictures Header -->
+    <TextView
+        android:id="@+id/f_offer_management_tv_pictures"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/segoeui_font"
+        android:textColor="@color/colorHeaderBlack"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/f_offer_management_tv_title"
+        tools:text="@string/offer_pictures" />
+    <!-- Offer Image 1-->
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/f_offer_management_sdv_1"
+        android:layout_width="120dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="20dp"
+        app:actualImageScaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/f_offer_management_tv_pictures"
+        app:layout_constraintTop_toBottomOf="@id/f_offer_management_tv_pictures"
+        app:placeholderImage="@drawable/ic_upload"
+        app:placeholderImageScaleType="centerInside"
+        app:roundedCornerRadius="16dp" />
+    <!-- Offer Image 2-->
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/f_offer_management_sdv_2"
+        android:layout_width="140dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        app:actualImageScaleType="centerCrop"
+        app:layout_constraintStart_toEndOf="@id/f_offer_management_sdv_1"
+        app:layout_constraintTop_toTopOf="@id/f_offer_management_sdv_1"
+        app:placeholderImage="@drawable/ic_upload"
+        app:placeholderImageScaleType="centerInside"
+        app:roundedCornerRadius="16dp" />
+    <!-- Offer Image 3-->
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/f_offer_management_sdv_3"
+        android:layout_width="140dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:actualImageScaleType="centerCrop"
+        app:layout_constraintStart_toEndOf="@id/f_offer_management_sdv_1"
+        app:layout_constraintTop_toBottomOf="@id/f_offer_management_sdv_2"
+        app:placeholderImage="@drawable/ic_upload"
+        app:placeholderImageScaleType="centerInside"
+        app:roundedCornerRadius="16dp" />
+    <!-- Offer Title -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/f_offer_management_til_title"
+        style="@style/customGreenFilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:hint="@string/hint_title"
+        app:boxStrokeColor="@color/colorGreenMessage"
+        app:layout_constraintTop_toBottomOf="@id/f_offer_management_sdv_3">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/f_offer_management_tiet_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_light_font"
+            android:maxLines="1"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/colorValueGrey" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- Offer Description -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/f_offer_management_til_description"
+        style="@style/customGreenFilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:hint="@string/hint_description"
+        app:boxStrokeColor="@color/colorGreenMessage"
+        app:layout_constraintTop_toBottomOf="@id/f_offer_management_til_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/f_offer_management_tiet_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_light_font"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/colorValueGrey" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- Offer Start Date -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/f_offer_management_til_start_date"
+        style="@style/customGreenFilledBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/hint_start_date"
+        app:layout_constraintStart_toStartOf="@id/f_offer_management_til_title"
+        app:layout_constraintTop_toBottomOf="@id/f_offer_management_til_description"
+        app:layout_constraintWidth_percent="0.439">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/f_offer_management_tiet_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:fontFamily="@font/opensans_light_font"
+            android:maxLines="1"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/colorValueGrey" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- Offer End Date -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/f_offer_management_til_end_date"
+        style="@style/customGreenFilledBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_end_date"
+        app:layout_constraintEnd_toEndOf="@id/f_offer_management_til_title"
+        app:layout_constraintStart_toEndOf="@id/f_offer_management_til_start_date"
+        app:layout_constraintTop_toTopOf="@id/f_offer_management_til_start_date"
+        app:layout_constraintWidth_percent="0.439">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/f_offer_management_tiet_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:fontFamily="@font/opensans_light_font"
+            android:maxLines="1"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/colorValueGrey" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- Tags Header -->
+    <TextView
+        android:id="@+id/f_offer_management_tv_tags"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/tags"
+        android:textColor="@color/colorCorduray"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/f_offer_management_til_title"
+        app:layout_constraintTop_toBottomOf="@id/f_offer_management_til_start_date" />
+    <!-- Tags Search -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/f_offer_management_til_search_tags"
+        style="@style/customGreenUnFilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:hint="@string/hint_search_tags"
+        app:boxStrokeColor="@color/colorGreenMessage"
+        app:hintTextColor="@color/colorPlaceholderGrey"
+        app:layout_constraintTop_toBottomOf="@id/f_offer_management_tv_tags">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/f_offer_management_tiet_search_tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_light_font"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/colorValueGrey"
+            app:boxStrokeColor="@color/colorGreenMessage" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- Tags RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/f_offer_management_rv_tags"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/f_offer_management_tv_tags"
+        app:layout_constraintTop_toBottomOf="@id/f_offer_management_til_search_tags"
+        tools:listitem="@layout/item_green_chip" />
+    <!-- Save Button -->
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:backgroundTint="@color/colorGreenMessage"
+        android:fontFamily="@font/segoeui_bold_font"
+        android:paddingTop="5dp"
+        android:paddingBottom="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        app:cornerRadius="20dp"
+        app:layout_constraintTop_toBottomOf="@id/f_offer_management_rv_tags"
+        tools:text="Save" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

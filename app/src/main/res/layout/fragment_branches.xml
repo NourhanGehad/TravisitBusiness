@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".vvm.destination.BranchesFragment"
+    android:padding="15dp"
+    android:background="@color/colorWhite">
+    <!-- Fragment Title -->
+    <TextView
+        android:id="@+id/f_branches_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/branches_title"
+        android:textSize="25sp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/segoeui_font"
+        android:textStyle="bold"
+        android:textColor="@color/colorHeaderBlack"/>
+    <!--Branches Recyclerview-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/f_branches_rv_branches"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:listitem="@layout/card_branch"
+        app:layout_constraintTop_toBottomOf="@id/f_branches_tv_title"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

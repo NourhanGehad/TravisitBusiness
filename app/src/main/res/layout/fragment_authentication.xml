@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".vvm.destination.AuthenticationFragment">
+    <!-- Blue Cloud -->
+    <ImageView
+        android:id="@+id/f_auth_iv_blue_cloud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_v_blue_cloud"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Welcome Back TextView -->
+    <TextView
+        android:id="@+id/f_auth_tv_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="45dp"
+        android:fontFamily="@font/segoeui_bold_font"
+        android:text="@string/f_auth_welcome_back"
+        android:textColor="@color/colorWhite"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/f_auth_iv_blue_cloud"
+        app:layout_constraintTop_toTopOf="@id/f_auth_iv_blue_cloud" />
+    <!-- Sign In TextView -->
+    <TextView
+        android:id="@+id/f_auth_tv_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:fontFamily="@font/segoeui_bold_font"
+        android:includeFontPadding="false"
+        android:text="@string/f_auth_sign_in"
+        android:textColor="@color/colorWhite"
+        android:textSize="55sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/f_auth_tv_welcome"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Email Input Field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/f_auth_til_email_address"
+        style="@style/customOutLinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:hint="@string/hint_email"
+        app:layout_constraintTop_toBottomOf="@id/f_auth_iv_blue_cloud">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/f_auth_tiet_email_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:nextFocusForward="@id/f_auth_til_password"
+            android:textColor="@color/colorPlaceholderLightGrey" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Password Input Field-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/f_auth_til_password"
+        style="@style/customOutLinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:hint="@string/hint_password"
+        app:layout_constraintTop_toBottomOf="@id/f_auth_til_email_address"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/colorPlaceholderLightGrey">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/f_auth_tiet_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textColor="@color/colorPlaceholderLightGrey" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <!--  Forgot Password TextView  -->
+    <TextView
+        android:id="@+id/f_auth_tv_forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="4dp"
+        android:text="@string/forgot_password_q"
+        android:textColor="@color/colorPlaceholderLightGrey"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/f_auth_til_password"
+        app:layout_constraintTop_toBottomOf="@id/f_auth_til_password" />
+    <!--  Sign In Button  -->
+    <Button
+        android:id="@+id/f_auth_btn_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/blue_gradient_rounded_corners"
+        android:enabled="false"
+        android:fontFamily="@font/segoeui_bold_font"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:text="@string/sign_in"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/f_auth_tv_forgot_password" />
+    <!--  Go to sign up page  -->
+    <TextView
+        android:id="@+id/f_auth_tv_go_to_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/go_to_sign_up"
+        android:textColor="@color/colorPlaceholderLightGrey"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Don't have an account? Sign up" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

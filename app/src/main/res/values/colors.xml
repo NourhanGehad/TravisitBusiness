@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF4048</color>
+    <color name="colorLogoText">#31292B</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBorderSummerSky">#47C1F0</color>
+    <color name="colorTextSummerSky">#46B8F0</color>
+    <color name="colorPlaceholderLightGrey">#707070</color>
+    <color name="colorSubHeaderSummerSky">#42A3EE</color>
+    <color name="colorDropDownArrow">#3C75EB</color>
+    <color name="colorHeaderBlackRussian">#0F121B</color>
+    <color name="colorHeaderBlack">#000000</color>
+    <color name="colorSubHeaderBlack2">#0A0A0A</color>
+    <color name="colorSubHeaderDescGrey">#656565</color>
+    <color name="colorCreatePagesGreen">#29B56E</color>
+    <color name="colorGreenMessage">#29B56E</color>
+    <color name="colorRedMessage">#DE0101</color>
+    <color name="colorCreatePagesFields">#707070</color>
+    <color name="colorPlaceholderGrey">#8024253D</color>
+    <color name="colorValueGrey">#24253D</color>
+    <color name="colorSearchBarPlaceholder">#9C9C9C</color>
+    <color name="colorMediumSeaGreen">#29B56E</color>
+    <color name="colorRatingSaffron">#FCBC26</color>
+    <color name="colorReceivedMessageText">#323643</color>
+    <color name="colorSentMessageTime">#D8D8D8</color>
+    <color name="colorReceivedMessageTime">#989BA5</color>
+    <color name="colorMessagePlaceholder">#C1C0C8</color>
+    <color name="colorMessageHeader">#181818</color>
+    <color name="colorMessageRecipientName">#3B566E</color>
+    <color name="colorLastMessage">#C6C6C6</color>
+    <color name="colorBlueSpecialButtons">#4AACFF</color>
+    <color name="colorCongratulations">#485B69</color>
+    <color name="colorCorduray">#424443</color>
+    <color name="colorWhiteSmoke">#F3F3F3</color>
+    <color name="colorGrey">#787878</color>
+    <color name="colorCommentsNumber">#757474</color>
+    <!--Blue Gradient Colors-->
+    <color name="BlueGradientEnd">#3235E8</color>
+    <color name="BlueGradientEnd50opacity">#803235E8</color>
+    <color name="BlueGradientMiddle">#3C7AEC</color>
+    <color name="BlueGradientMiddle50opacity">#803C7AEC</color>
+    <color name="BlueGradientStart">#47C1F0</color>
+    <color name="BlueGradientStart50opacity">#8047C1F0</color>
+    <!--Red Gradient Colors-->
+    <color name="RedGradientEnd">#FF4048</color>
+    <color name="RedGradientMiddle">#F7555B</color>
+    <color name="RedGradientStart">#EE6B70</color>
+</resources>

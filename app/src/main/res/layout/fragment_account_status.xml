@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".vvm.destination.AccountStatusFragment">
+
+    <include
+        android:id="@+id/layout_unverified"
+        android:visibility="visible"
+        layout="@layout/layout_account_unverified"/>
+    <include
+        android:id="@+id/layout_verified"
+        android:visibility="gone"
+        layout="@layout/layout_account_verified"/>
+
+</FrameLayout>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    app:cardCornerRadius="30dp"
+    app:cardElevation="10dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/card_branch_container"
+        android:paddingBottom="10dp">
+
+        <!-- Branch name TextView -->
+        <TextView
+            android:id="@+id/card_branch_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/segoeui_font"
+            android:textStyle="bold"
+            android:textColor="@color/colorGreenMessage"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Branch name" />
+        <!-- Options Icon -->
+        <ImageView
+            android:id="@+id/card_branch_iv_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_options"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/card_branch_tv_name" />
+        <!-- Rating title -->
+        <TextView
+            android:id="@+id/card_branch_tv_rating_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@string/rating"
+            android:fontFamily="@font/segoeui_font"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/card_branch_tv_name"
+            app:layout_constraintStart_toStartOf="@id/card_branch_tv_name"/>
+        <!-- Rating Star -->
+        <ImageView
+            android:id="@+id/card_branch_iv_star"
+            android:layout_width="18dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_star"
+            app:layout_constraintStart_toStartOf="@id/card_branch_tv_rating_title"
+            app:layout_constraintTop_toTopOf="@id/card_branch_tv_rating"
+            app:layout_constraintBottom_toBottomOf="@id/card_branch_tv_rating"/>
+        <!-- Rating TextView -->
+        <TextView
+            android:id="@+id/card_branch_tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/poppins_regular_font"
+            android:textColor="@color/colorRatingSaffron"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@id/card_branch_iv_star"
+            app:layout_constraintEnd_toEndOf="@id/card_branch_tv_rating_title"
+            app:layout_constraintTop_toBottomOf="@id/card_branch_tv_rating_title"
+            tools:text="4.5" />
+        <!-- No. Of Offers title -->
+        <TextView
+            android:id="@+id/card_branch_tv_no_of_offers_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:text="@string/offers"
+            android:fontFamily="@font/segoeui_font"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="@id/card_branch_tv_rating_title"
+            app:layout_constraintStart_toEndOf="@id/card_branch_tv_rating_title"/>
+        <!-- No. Of Offers TextView -->
+        <TextView
+            android:id="@+id/card_branch_tv_no_of_offers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular_font"
+            android:textColor="@color/colorGreenMessage"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@id/card_branch_iv_star"
+            app:layout_constraintTop_toBottomOf="@id/card_branch_tv_rating_title"
+            app:layout_constraintStart_toStartOf="@id/card_branch_tv_no_of_offers_title"
+            app:layout_constraintEnd_toEndOf="@id/card_branch_tv_no_of_offers_title"
+            tools:text="10" />
+        <!-- Options Icon -->
+        <ImageView
+            android:id="@+id/card_branch_iv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:src="@drawable/ic_trash"
+            app:layout_constraintEnd_toEndOf="@id/card_branch_iv_options"
+            app:layout_constraintBottom_toBottomOf="@id/card_branch_tv_no_of_offers" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

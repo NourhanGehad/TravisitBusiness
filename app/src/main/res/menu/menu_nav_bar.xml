@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@id/homeFragment"
+        android:icon="@drawable/ic_home"
+        android:title="Home"/>
+    <item
+        android:id="@id/branchesFragment"
+        android:icon="@drawable/ic_branches"
+        android:title="Branches"/>
+    <item
+        android:id="@id/notificationsFragment"
+        android:icon="@drawable/ic_notifications"
+        android:title="Notifications"/>
+    <item
+        android:id="@id/accountFragment"
+        android:icon="@drawable/ic_profile"
+        android:title="Account"/>
+</menu>

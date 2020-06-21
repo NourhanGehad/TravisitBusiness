@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:paddingStart="25dp"
+    android:paddingEnd="25dp">
+    <!-- Celebration Vector-->
+    <ImageView
+        android:id="@+id/layout_account_verified_iv_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_celebrate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19" />
+    <!-- Verified Vector -->
+    <ImageView
+        android:id="@+id/layout_account_verified_iv_verified"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_group_verified"
+        android:layout_marginBottom="25dp"
+        app:layout_constraintBottom_toBottomOf="@id/layout_account_verified_iv_card"
+        app:layout_constraintStart_toStartOf="@id/layout_account_verified_iv_card"
+        app:layout_constraintEnd_toEndOf="@id/layout_account_verified_iv_card"/>
+    <!-- Congratulations Header-->
+    <TextView
+        android:id="@+id/layout_account_verified_tv_congrats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/segoeui_font"
+        android:text="@string/congratulations"
+        android:textColor="@color/colorCongratulations"
+        android:textSize="28sp"
+        android:layout_marginTop="35dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/layout_account_verified_iv_card"
+        app:layout_constraintStart_toStartOf="@id/layout_account_verified_iv_card"
+        app:layout_constraintEnd_toEndOf="@id/layout_account_verified_iv_card"/>
+    <!-- Status Description-->
+    <TextView
+        android:id="@+id/layout_account_verified_tv_status_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/segoeui_font"
+        android:text="@string/verified_account_status_description"
+        android:textAlignment="center"
+        android:textColor="@color/colorSubHeaderDescGrey"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_account_verified_iv_card" />
+    <!-- Next Button-->
+    <Button
+        android:id="@+id/layout_account_verified_btn_go_to_home"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/rounded_corners_shape_10dp"
+        android:backgroundTint="@color/colorCreatePagesGreen"
+        android:fontFamily="@font/segoeui_bold_font"
+        android:text="@string/go_to_account"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/layout_account_verified_iv_card"
+        app:layout_constraintStart_toStartOf="@id/layout_account_verified_iv_card" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
