@@ -44,7 +44,6 @@ public class SplashFragment extends Fragment {
         Animation aniFade = AnimationUtils.loadAnimation(getActivity(),R.anim.fade_in);
         binding.fSplashIvLogo.startAnimation(aniFade);
         binding.fSplashTvAppName.startAnimation(aniFade);
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

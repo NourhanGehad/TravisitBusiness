@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/mapsFragment">
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.travisit.travisitbusiness.vvm.destination.SplashFragment"
@@ -283,6 +283,19 @@
             android:defaultValue="@null"
             app:argType="com.travisit.travisitbusiness.model.Branch"
             app:nullable="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.travisit.travisitbusiness.vvm.destination.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_map_to_branch"
+            app:destination="@id/editBranchFragment"
+            app:enterAnim="@anim/slide_from_out_right_to_center"
+            app:exitAnim="@anim/slide_from_center_to_out_left"
+            app:popUpTo="@id/app_nav_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 </navigation>

@@ -43,7 +43,6 @@ public interface Services {
     //Profile
     @PUT("business/me")
     Observable<JsonObject> editProfile(@Body EditProfileForm userData);
-
     @Multipart
     @PUT("business/me/images")
     Observable<Business> changeBusinessLogo(@Part MultipartBody.Part logoFile);
@@ -51,27 +50,18 @@ public interface Services {
     @Multipart
     @PUT("business/me/images")
     Observable<Business> uploadIssuedNumberLogo(@Part MultipartBody.Part issuedNumberFile);
-
     //Categories
     @GET("categories")
     Observable<JsonObject> getCategories();
-
     //Offers
     @GET("offers")
-    Observable<JsonObject> getOffers(
-            @Query("startDate") String startDate,
-            @Query("endDate") String endDate );
-
+    Observable<JsonObject> getOffers(@Query("startDate") String startDate, @Query("endDate") String endDate);
     @POST("offers")
     Observable<JsonObject> addOffer(@Body Offer offer); //TODO : Add offer attributes
-
     @DELETE("offers/{offer_id}")
     Observable<JsonObject> deleteOffer(@Path("offer_id") int id);
-
     @PUT("offers/{offer_id}")
-    Observable<JsonObject> updateOffer(
-            @Path("offer_id") int id,
-            @Body Offer offer);
+    Observable<JsonObject> updateOffer(@Path("offer_id") int id,@Body Offer offer);
 
     @Multipart
     @PUT("offers/images/{offer_id}")

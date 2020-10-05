@@ -45,14 +45,12 @@ public class Client {
                 Request.Builder requestBuilder = chain.request().newBuilder()
                         .addHeader("Content-Type", "application/json");
                      /*   .addHeader("Accept", "application/json")*/
-
                 if (token != null)
                 requestBuilder.addHeader("Authorization", "JWT "+token);
                 Request request = requestBuilder.build();
                 return chain.proceed(request);
             }
         });
-
         return httpClient.build();
     }
 

@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.travisit.travisitbusiness.data.Client;
@@ -28,8 +29,11 @@ import okhttp3.RequestBody;
 
 public class BranchesVM extends ViewModel {
     public MutableLiveData<ArrayList<Branch>> branchesMutableLiveData = new MutableLiveData<>();
+    public static MutableLiveData<LatLng> myLocation=new MutableLiveData<>();
     CompositeDisposable compositeDisposable;
-
+    public BranchesVM() {
+        super();
+    }
 /*    public void editProfile(String name, String email, String governmentIssuedNumber) {
         EditProfileForm editProfileForm = new EditProfileForm(name, email, governmentIssuedNumber, selectedCategories);
         Observable<JsonObject> observable = Client.getINSTANCE().editProfile(editProfileForm)
@@ -51,7 +55,6 @@ public class BranchesVM extends ViewModel {
             branchesMutableLiveData.setValue(branches);
         }, e -> Log.d("PVMError", e.getMessage())));
     }
-
     private ArrayList<Branch> parseBranches(JsonObject jsonObject) {
         ArrayList<Branch> branches = new ArrayList<Branch>();
         JsonArray jsonArray = jsonObject.get("rows").getAsJsonArray();
@@ -69,10 +72,12 @@ public class BranchesVM extends ViewModel {
         }
         return branches;
     }
-
     @Override
     protected void onCleared() {
         super.onCleared();
-        compositeDisposable.clear();
+        //if there are no CompositeDisposable
+        try{
+            compositeDisposable.clear();
+        }catch (Exception e){e.printStackTrace();}
     }
 }
