@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.Manifest;
@@ -207,8 +208,11 @@ public class MapsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //performSearch();
-                vm.myLocation.setValue(myLocation);
-                Navigation.findNavController(view).navigate(R.id.action_map_to_branch);
+                //vm.myLocation.setValue(myLocation);
+                //Navigation.findNavController(view).navigate(R.id.action_map_to_branch);
+                final NavController navController=Navigation.findNavController(view);
+                MapsFragmentDirections.ActionMapToBranch actionMapToBranch= MapsFragmentDirections.actionMapToBranch().setLocation(myLocation);
+                navController.navigate(actionMapToBranch);
             }
         });
     }

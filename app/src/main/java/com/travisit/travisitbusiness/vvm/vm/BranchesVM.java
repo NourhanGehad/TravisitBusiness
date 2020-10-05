@@ -29,7 +29,7 @@ import okhttp3.RequestBody;
 
 public class BranchesVM extends ViewModel {
     public MutableLiveData<ArrayList<Branch>> branchesMutableLiveData = new MutableLiveData<>();
-    public static MutableLiveData<LatLng> myLocation=new MutableLiveData<>();
+    public MutableLiveData<LatLng> myLocation=new MutableLiveData<>();
     CompositeDisposable compositeDisposable;
     public BranchesVM() {
         super();
