@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/save_option"
+        android:title="@string/save_option"/>
+    <item
+        android:id="@+id/cancel_option"
+        android:title="@string/cancel_option"/>
+</menu>

@@ -9,13 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.travisit.travisitbusiness.R;
+import com.travisit.travisitbusiness.databinding.FragmentNotificationsBinding;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class NotificationsFragment extends Fragment {
-
+    private FragmentNotificationsBinding binding;
     public NotificationsFragment() {
         // Required empty public constructor
     }
@@ -26,5 +23,10 @@ public class NotificationsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_notifications, container, false);
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

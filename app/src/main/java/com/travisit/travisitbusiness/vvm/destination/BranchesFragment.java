@@ -1,33 +1,34 @@
 package com.travisit.travisitbusiness.vvm.destination;
 
-import android.os.Bundle;
+        import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+        import androidx.annotation.NonNull;
+        import androidx.annotation.Nullable;
+        import androidx.fragment.app.Fragment;
+        import androidx.lifecycle.Observer;
+        import androidx.lifecycle.ViewModelProviders;
+        import androidx.navigation.NavDirections;
+        import androidx.navigation.Navigation;
+        import androidx.recyclerview.widget.GridLayoutManager;
+        import androidx.recyclerview.widget.LinearLayoutManager;
+        import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
 
-import com.travisit.travisitbusiness.R;
-import com.travisit.travisitbusiness.databinding.FragmentBranchesBinding;
-import com.travisit.travisitbusiness.databinding.FragmentResetPasswordBinding;
-import com.travisit.travisitbusiness.model.Branch;
-import com.travisit.travisitbusiness.utils.ChosenAction;
-import com.travisit.travisitbusiness.vvm.AppActivity;
-import com.travisit.travisitbusiness.vvm.adapter.BranchesAdapter;
-import com.travisit.travisitbusiness.vvm.vm.AuthenticationVM;
-import com.travisit.travisitbusiness.vvm.vm.BranchesVM;
+        import com.google.gson.JsonObject;
+        import com.travisit.travisitbusiness.R;
+        import com.travisit.travisitbusiness.databinding.FragmentBranchesBinding;
+        import com.travisit.travisitbusiness.databinding.FragmentResetPasswordBinding;
+        import com.travisit.travisitbusiness.model.Branch;
+        import com.travisit.travisitbusiness.utils.ChosenAction;
+        import com.travisit.travisitbusiness.vvm.AppActivity;
+        import com.travisit.travisitbusiness.vvm.adapter.BranchesAdapter;
+        import com.travisit.travisitbusiness.vvm.vm.AuthenticationVM;
+        import com.travisit.travisitbusiness.vvm.vm.BranchesVM;
 
-import java.util.ArrayList;
+        import java.util.ArrayList;
 
 
 public class BranchesFragment extends Fragment {
@@ -40,7 +41,7 @@ public class BranchesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ((AppActivity) getActivity()).changeBottomNavVisibility(View.VISIBLE);
+        ((AppActivity) getActivity()).changeBottomNavVisibility(View.VISIBLE, false);
         binding = FragmentBranchesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
@@ -63,22 +64,36 @@ public class BranchesFragment extends Fragment {
     private void handleUserInteractions(View view) {
     }
     private void initRecyclerView(ArrayList<Branch> branches, View view){
-        binding.fBranchesRvBranches.setAdapter(new BranchesAdapter(branches, getActivity(), new BranchesAdapter.SelectionPropagator() {
+        BranchesAdapter adapter = new BranchesAdapter(branches, getActivity(), new BranchesAdapter.SelectionPropagator() {
             @Override
             public void branchSelected(Branch branch, ChosenAction actionChosen) {
                 if(actionChosen == ChosenAction.EDIT){
                     NavDirections action = BranchesFragmentDirections.actionFromBranchesToEditBranch().setBranch(branch);
                     Navigation.findNavController(view).navigate(action);
                 } else if (actionChosen == ChosenAction.DELETE){
-
+                    vm.deleteBranch(branch.getId());
+                    vm.deletingMutableLiveData.observe(getActivity(), new Observer<String>(){
+                        @Override
+                        public void onChanged(String string) {
+                            if(string.equals("done")) {
+                                Navigation.findNavController(view).navigateUp();
+                            }
+                        }
+                    });
                 }
             }
-        }));
+        });
+        binding.fBranchesRvBranches.setAdapter(adapter);
 
         binding.fBranchesRvBranches.setLayoutManager(new LinearLayoutManager(
                 getActivity(),
                 RecyclerView.VERTICAL,
                 false
         ));
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

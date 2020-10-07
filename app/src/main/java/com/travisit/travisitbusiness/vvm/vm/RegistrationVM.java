@@ -16,7 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class RegistrationVM extends ViewModel {
-//    public Model model = new Model();
+
     public MutableLiveData<Business> businessTokenLiveData = new MutableLiveData<>();
     CompositeDisposable compositeDisposable;
     public void signUpBusiness(String name, String email, String password){
@@ -32,6 +32,8 @@ public class RegistrationVM extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        compositeDisposable.clear();
+        if(compositeDisposable != null) {
+            compositeDisposable.clear();
+        }
     }
 }

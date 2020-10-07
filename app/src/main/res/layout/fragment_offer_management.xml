@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     tools:context=".vvm.destination.OfferManagementFragment">
-
     <!-- Offer Management Header -->
     <TextView
         android:id="@+id/f_offer_management_tv_title"
@@ -170,6 +169,29 @@
             android:textColor="@color/colorValueGrey" />
 
     </com.google.android.material.textfield.TextInputLayout>
+    <!-- Branch Selector-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/f_offer_management_til_branch"
+        style="@style/customFilledExposedDropDown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:hint="@string/branch"
+        app:endIconDrawable="@drawable/ic_spinner_down_arrow"
+        app:layout_constraintTop_toBottomOf="@id/f_offer_management_til_start_date">
+
+        <AutoCompleteTextView
+            android:id="@+id/f_offer_management_tiet_branch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:importantForAutofill="no"
+            android:inputType="none"
+            android:fontFamily="@font/opensans_light_font"
+            android:textColor="@color/colorValueGrey" />
+    </com.google.android.material.textfield.TextInputLayout>
     <!-- Tags Header -->
     <TextView
         android:id="@+id/f_offer_management_tv_tags"
@@ -180,7 +202,7 @@
         android:textColor="@color/colorCorduray"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@id/f_offer_management_til_title"
-        app:layout_constraintTop_toBottomOf="@id/f_offer_management_til_start_date" />
+        app:layout_constraintTop_toBottomOf="@id/f_offer_management_til_branch" />
     <!-- Tags Search -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/f_offer_management_til_search_tags"
@@ -214,13 +236,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/f_offer_management_tv_tags"
         app:layout_constraintTop_toBottomOf="@id/f_offer_management_til_search_tags"
         tools:listitem="@layout/item_green_chip" />
     <!-- Save Button -->
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/f_offer_management_mtbtn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
@@ -233,6 +255,7 @@
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
         app:cornerRadius="20dp"
+        android:alpha="0.5"
         app:layout_constraintTop_toBottomOf="@id/f_offer_management_rv_tags"
         tools:text="Save" />
 

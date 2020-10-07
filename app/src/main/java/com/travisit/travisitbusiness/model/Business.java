@@ -3,6 +3,7 @@ package com.travisit.travisitbusiness.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Business implements Serializable {
     @SerializedName("token")
@@ -23,8 +24,14 @@ public class Business implements Serializable {
     private String governmentIssuedNumber = null;
     @SerializedName("governmentIssuedNumberImage")
     private String governmentIssuedNumberImage = null;
+    @SerializedName("categories")
+    private ArrayList<Category> businessesCategories = null;
+    @SerializedName("offersCount")
+    private Integer offersCount = null;
+    @SerializedName("branchesCount")
+    private Integer branchesCount = null;
 
-    public Business(String token, Integer id, String name, String email, String logo, String approvementStatus, String governmentIssuedNumber, String governmentIssuedNumberImage) {
+    public Business(String token, Integer id, String name, String email, String logo, String approvementStatus, String governmentIssuedNumber, String governmentIssuedNumberImage, ArrayList<Category> businessesCategories) {
         this.token = token;
         this.id = id;
         this.name = name;
@@ -33,6 +40,7 @@ public class Business implements Serializable {
         this.approvementStatus = approvementStatus;
         this.governmentIssuedNumber = governmentIssuedNumber;
         this.governmentIssuedNumberImage = governmentIssuedNumberImage;
+        this.businessesCategories = businessesCategories;
     }
 
     public Business(String token) {
@@ -115,5 +123,29 @@ public class Business implements Serializable {
 
     public void setGovernmentIssuedNumberImage(String governmentIssuedNumberImage) {
         this.governmentIssuedNumberImage = governmentIssuedNumberImage;
+    }
+
+    public ArrayList<Category> getBusinessesCategories() {
+        return businessesCategories;
+    }
+
+    public void setBusinessesCategories(ArrayList<Category> businessesCategories) {
+        this.businessesCategories = businessesCategories;
+    }
+
+    public Integer getOffersCount() {
+        return offersCount;
+    }
+
+    public void setOffersCount(Integer offersCount) {
+        this.offersCount = offersCount;
+    }
+
+    public Integer getBranchesCount() {
+        return branchesCount;
+    }
+
+    public void setBranchesCount(Integer branchesCount) {
+        this.branchesCount = branchesCount;
     }
 }

@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class ForgotPasswordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ((AppActivity) getActivity()).changeBottomNavVisibility(View.GONE);
+        ((AppActivity) getActivity()).changeBottomNavVisibility(View.GONE, false);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         binding = FragmentForgotPasswordBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
@@ -83,9 +84,8 @@ public class ForgotPasswordFragment extends Fragment {
         binding.fForgotPasswordBtnSendCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
                 vm.RequestNewPasswordCode(
-                        getFieldText("password")
+                        getFieldText("email")
                 );
                 vm.newCodeMutableLiveData.observe(getActivity(), new Observer<JsonObject>() {
                     @Override
@@ -93,7 +93,9 @@ public class ForgotPasswordFragment extends Fragment {
                         if (jsonObject.get("result").getAsString().equals("Email sent.")) {
                             //TODO: Change message way
                             Toast.makeText(getActivity(), R.string.reset_code_sent, Toast.LENGTH_SHORT).show();
+                            Log.d("here","before");
                             preferences.savePasswordResetCode(jsonObject.get("code").getAsString());
+                            Log.d("here","after" + jsonObject.get("code").getAsString());
                             NavDirections action = ForgotPasswordFragmentDirections.actionFromForgotPasswordToCheckPasswordCodeFragment()
                                     .setCode(jsonObject.get("code").getAsString());
                             Navigation.findNavController(view).navigate(action);

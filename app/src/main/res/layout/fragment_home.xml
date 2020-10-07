@@ -5,47 +5,52 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".vvm.destination.HomeFragment"
-    android:background="@color/colorWhite"
-    android:padding="15dp">
+    android:background="@color/colorWhite">
     <!-- Fragment Title -->
     <TextView
         android:id="@+id/fragment_home_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/f_home_civ_logo"
-        app:layout_constraintBottom_toBottomOf="@id/f_home_civ_logo"
+        app:layout_constraintTop_toTopOf="@id/f_home_sdv_logo"
+        app:layout_constraintBottom_toBottomOf="@id/f_home_sdv_logo"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/home_title"
         android:textSize="25sp"
         android:fontFamily="@font/segoeui_font"
         android:textStyle="bold"
-        android:textColor="@color/colorHeaderBlack"/>
+        android:textColor="@color/colorHeaderBlack"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"/>
     <!-- Business Logo -->
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/f_home_civ_logo"
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/f_home_sdv_logo"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:src="@drawable/dummy_logp"
-        app:civ_border_width="2dp"
+        android:layout_marginEnd="15dp"
+        app:actualImageResource="@drawable/dummy_logo"
+        app:actualImageScaleType="centerInside"
+        app:roundingBorderColor="@color/colorBorderSummerSky"
+        app:roundingBorderWidth="1dp"
         android:layout_marginTop="5dp"
-        app:civ_border_color="@color/colorBorderSummerSky"
+        app:roundedCornerRadius="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
     <!-- Inactive Search Bar and Filter-->
     <include
         android:id="@+id/f_home_layout_in_active_search_bar"
         layout="@layout/layout_inactive_search_bar"
-        app:layout_constraintTop_toBottomOf="@id/f_home_civ_logo" />
+        app:layout_constraintTop_toBottomOf="@id/f_home_sdv_logo" />
     <!-- Active Search Bar -->
     <include
         android:id="@+id/f_home_layout_active_search_bar"
         layout="@layout/layout_active_search_bar"
-        app:layout_constraintTop_toBottomOf="@id/f_home_civ_logo" />
+        app:layout_constraintTop_toBottomOf="@id/f_home_sdv_logo" />
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_home_rv_offers"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/f_home_layout_in_active_search_bar"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:paddingBottom="20dp"
+        android:paddingBottom="40dp"
         tools:listitem="@layout/card_offer"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.travisit.travisitbusiness.utils;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 import com.travisit.travisitbusiness.model.Business;
@@ -59,13 +60,20 @@ public class SharedPrefManager {
         Gson gson = new Gson();
         String json = sharedPreferences.getString("User", "");
         Business business = gson.fromJson(json, Business.class);
+        if(business == null) return null;
         return business;
     }
     public String getUserToken(){
         Gson gson = new Gson();
         String json = sharedPreferences.getString("User", "");
         Business business = gson.fromJson(json, Business.class);
+        if(business == null) return null;
         return business.getToken();
+    }
+    public void logout(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
     }
 
 //    public void setNotificationsEnabled(boolean enabled){

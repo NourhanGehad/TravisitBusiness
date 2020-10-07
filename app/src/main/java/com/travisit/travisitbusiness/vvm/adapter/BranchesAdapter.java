@@ -22,6 +22,7 @@ import com.travisit.travisitbusiness.R;
 import com.travisit.travisitbusiness.model.Branch;
 import com.travisit.travisitbusiness.utils.ChosenAction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.BranchViewHolder> {
@@ -99,6 +100,7 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
         builder.setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                removeItem(branch);
                 observer.branchSelected(branch, ChosenAction.DELETE);
             }
         });
@@ -110,12 +112,6 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-/*
-        Button btnPositive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        Button btnNegative = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        btnPositive.setTextColor(context.getColor(R.color.colorRedMessage));
-        btnPositive.setBackgroundColor(context.getColor(R.color.colorWhite));
-        btnNegative.setBackgroundColor(context.getColor(R.color.colorWhite));*/
 
     }
     private void showMenu(View v, Branch branch) {
@@ -134,6 +130,10 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
         });
         popup.inflate(R.menu.menu_branch_options);
         popup.show();
+    }
+    private void removeItem(Branch branch){
+        items.remove(branch);
+        notifyDataSetChanged();
     }
     public interface SelectionPropagator{
         void branchSelected(Branch branch, ChosenAction action );

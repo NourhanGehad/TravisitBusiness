@@ -2,16 +2,18 @@ package com.travisit.travisitbusiness.model;
 
 import java.io.Serializable;
 
-public class Branch implements Serializable {
-    Integer id = null;
-    String name;
-    Float latitude;
-    Float longitude;
+public class Branch extends MiniBranch implements Serializable {
+    Double latitute;
+    Double longitude;
 
-    public Branch(Integer id, String name, Float latitude, Float longitude) {
-        this.id = id;
-        this.name = name;
-        this.latitude = latitude;
+    public Branch(Integer id, String name, Double latitude, Double longitude) {
+        super(id, name);
+        this.latitute = latitude;
+        this.longitude = longitude;
+    }
+    public Branch(String name, Double latitude, Double longitude) {
+        super(name);
+        this.latitute = latitude;
         this.longitude = longitude;
     }
 
@@ -31,19 +33,19 @@ public class Branch implements Serializable {
         this.name = name;
     }
 
-    public Float getLatitude() {
-        return latitude;
+    public Double getLatitude() {
+        return latitute;
     }
 
-    public void setLatitude(Float latitude) {
-        this.latitude = latitude;
+    public void setLatitude(Double latitude) {
+        this.latitute = latitude;
     }
 
-    public Float getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Float longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 }

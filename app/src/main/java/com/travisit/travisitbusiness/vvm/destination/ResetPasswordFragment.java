@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ public class ResetPasswordFragment extends Fragment {
     private AuthenticationVM vm;
     private FragmentResetPasswordBinding binding;
     private SharedPrefManager preferences;
-    private String code = ResetPasswordCodeFragmentArgs.fromBundle(getArguments()).getCode();
+    private String code;
     private final TextWatcher watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -40,7 +41,7 @@ public class ResetPasswordFragment extends Fragment {
         {}
         @Override
         public void afterTextChanged(Editable s) {
-            if (getFieldText("password").length() == 0 ){
+            if (getFieldText("password").length() < 6 ){
                 binding.fResetPasswordBtnChangePassword.setEnabled(false);
             } else {
                 binding.fResetPasswordBtnChangePassword.setEnabled(true);
@@ -52,11 +53,10 @@ public class ResetPasswordFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ((AppActivity) getActivity()).changeBottomNavVisibility(View.GONE);
+        ((AppActivity) getActivity()).changeBottomNavVisibility(View.GONE, false);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         binding = FragmentResetPasswordBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
@@ -66,6 +66,7 @@ public class ResetPasswordFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        code = ResetPasswordCodeFragmentArgs.fromBundle(getArguments()).getCode();
         if(code == null){
             preferences = new SharedPrefManager(getActivity());
             code = preferences.getPasswordResetCode();
@@ -84,6 +85,7 @@ public class ResetPasswordFragment extends Fragment {
                         vm.passwordResetMutableLiveData.observe(getActivity(), new Observer<JsonObject>() {
                             @Override
                             public void onChanged(JsonObject jsonObject) {
+                                Log.d("here", jsonObject.get("result").getAsString());
                                 Toast.makeText(getActivity(), R.string.password_changed_successfully, Toast.LENGTH_SHORT).show();
                                 Navigation.findNavController(view).navigateUp();
                             }
@@ -95,14 +97,14 @@ public class ResetPasswordFragment extends Fragment {
                 }
             }
         });
-        binding.fResetPasswordBtnChangePassword.addTextChangedListener(watcher);
+        binding.fResetPasswordTietNewPassword.addTextChangedListener(watcher);
     }
     private boolean codeIsCorrect(){
         return getFieldText("code").equals(code);
     }
     private String getFieldText(String fieldName){
         switch (fieldName){
-            case "password": return binding.fResetPasswordBtnChangePassword.getText().toString();
+            case "password": return binding.fResetPasswordTietNewPassword.getText().toString();
             default:
            return "invalid";
         }

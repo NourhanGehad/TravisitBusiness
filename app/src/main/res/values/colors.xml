@@ -30,6 +30,7 @@
     <color name="colorLastMessage">#C6C6C6</color>
     <color name="colorBlueSpecialButtons">#4AACFF</color>
     <color name="colorCongratulations">#485B69</color>
+    <color name="colorAccountItems">#485B69</color>
     <color name="colorCorduray">#424443</color>
     <color name="colorWhiteSmoke">#F3F3F3</color>
     <color name="colorGrey">#787878</color>
@@ -45,4 +46,7 @@
     <color name="RedGradientEnd">#FF4048</color>
     <color name="RedGradientMiddle">#F7555B</color>
     <color name="RedGradientStart">#EE6B70</color>
+    <color name="colorAccountCard">#F4FEF8</color>
+    <color name="colorNumbers">#575757</color>
+    <color name="colorNumberLabels">#A4A4A4</color>
 </resources>

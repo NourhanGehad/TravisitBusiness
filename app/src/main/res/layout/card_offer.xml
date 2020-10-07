@@ -7,20 +7,20 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     app:cardCornerRadius="30dp"
-    app:cardElevation="20dp"
+    app:cardElevation="10dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/card_offer_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="15dp">
         <!-- Offer Image -->
-
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/card_offer_sdv_image"
             android:layout_width="0dp"
-            android:layout_height="270dp"
+            android:layout_height="200dp"
             android:layout_margin="0dp"
             app:actualImageResource="@drawable/dummy_offer_picture"
             app:actualImageScaleType="centerCrop"
@@ -33,11 +33,11 @@
             android:id="@+id/card_offer_tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20sp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/opensans_bold_font"
             android:textColor="@color/colorHeaderBlack"
-            android:textSize="22sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_offer_sdv_image"
             tools:text="Offer name" />
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular_font"
             android:textColor="@color/colorCreatePagesGreen"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/card_offer_tv_name"
             app:layout_constraintTop_toBottomOf="@id/card_offer_tv_name"
             tools:text="Ends on 20-09-2029" />
@@ -70,7 +70,7 @@
             android:layout_marginStart="5dp"
             android:fontFamily="@font/poppins_regular_font"
             android:textColor="@color/colorRatingSaffron"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/card_offer_iv_star"
             app:layout_constraintTop_toTopOf="@id/card_offer_tv_end_date"
             tools:text="4.5" />

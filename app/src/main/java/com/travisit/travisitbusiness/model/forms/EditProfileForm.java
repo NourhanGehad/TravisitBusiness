@@ -2,15 +2,15 @@ package com.travisit.travisitbusiness.model.forms;
 
 import java.util.ArrayList;
 
-public class EditProfileForm extends EmailForm {
+public class EditProfileForm/* extends EmailForm*/ {
     private String name;
     private String governmentIssuedNumber;
-    private ArrayList<Integer> categories;
+    private ArrayList<Integer> businessesCategories;
 
     public EditProfileForm(String name, String email, String governmentIssuedNumber, ArrayList<Integer> categories) {
-        super(email);
+       // super(email);
         this.name = name;
         this.governmentIssuedNumber = governmentIssuedNumber;
-        this.categories = categories;
+        this.businessesCategories = categories;
     }
 }

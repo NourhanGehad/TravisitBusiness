@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".vvm.destination.ProfileFragment">
+        <!-- Cover Photo-->
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/f_profile_sdv_cover"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:actualImageResource="@drawable/dummy_ph"
+            app:actualImageScaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:roundTopEnd="false"
+            app:roundTopStart="false"
+            app:roundedCornerRadius="85dp" />
+        <!-- Logo -->
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/f_profile_sdv_logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="100dp"
+            app:actualImageResource="@drawable/dummy_offer_picture"
+            app:actualImageScaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/f_profile_sdv_cover"
+            app:roundedCornerRadius="50dp"
+            app:roundingBorderColor="@color/colorWhite"
+            app:roundingBorderWidth="3dp" />
+        <!-- Options Icon -->
+        <ImageView
+            android:id="@+id/f_profile_iv_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_options"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/f_profile_tv_business_name" />
+        <!-- Change Logo -->
+        <TextView
+            android:id="@+id/f_profile_tv_change_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/segoeui_font"
+            android:textColor="@color/colorTextSummerSky"
+            android:text="@string/change_logo"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/f_profile_sdv_logo" />
+        <!-- Business Name -->
+        <TextView
+            android:id="@+id/f_profile_tv_business_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/segoeui_font"
+            android:textColor="@color/colorHeaderBlack"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/f_profile_tv_change_logo"
+            tools:text="Business Name" />
+        <!-- Business Name To Edit -->
+        <EditText
+            android:id="@+id/f_profile_et_business_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/segoeui_font"
+            android:textColor="@color/colorHeaderBlack"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:hint="@string/hint_business_name"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/f_profile_tv_change_logo"
+            tools:text="Business Name" />
+
+        <TextView
+            android:id="@+id/f_profile_tv_no_of_offers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/segoeui_font"
+            android:textColor="@color/colorNumbers"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/f_profile_tv_offers_number_label"
+            app:layout_constraintEnd_toEndOf="@id/f_profile_tv_offers_number_label"
+            app:layout_constraintTop_toBottomOf="@id/f_profile_et_business_name"
+            tools:text="115" />
+
+        <TextView
+            android:id="@+id/f_profile_tv_offers_number_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/segoeui_font"
+            android:text="@string/offers"
+            android:textColor="@color/colorNumberLabels"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/f_profile_tv_businesses_number_label"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/f_profile_tv_no_of_offers" />
+
+
+        <TextView
+            android:id="@+id/f_profile_tv_no_of_branches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/segoeui_font"
+            android:textColor="@color/colorNumbers"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/f_profile_tv_businesses_number_label"
+            app:layout_constraintEnd_toEndOf="@id/f_profile_tv_businesses_number_label"
+            app:layout_constraintTop_toBottomOf="@id/f_profile_et_business_name"
+            tools:text="10" />
+
+        <TextView
+            android:id="@+id/f_profile_tv_businesses_number_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/segoeui_font"
+            android:text="@string/branches"
+            android:textColor="@color/colorNumberLabels"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/f_profile_tv_offers_number_label"
+            app:layout_constraintTop_toBottomOf="@id/f_profile_tv_no_of_offers" />
+        <!-- Business Email -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/f_profile_til_business_email"
+            style="@style/customGreenFilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="40dp"
+            android:hint="@string/hint_email"
+            app:boxStrokeColor="@color/colorGreenMessage"
+            app:layout_constraintTop_toBottomOf="@id/f_profile_tv_offers_number_label">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/f_profile_tiet_business_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_light_font"
+                    android:maxLines="1"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@color/colorValueGrey" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Government Issued Number-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/f_profile_til_business_gvmnt_no"
+            style="@style/customGreenFilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/hint_government_issued_number"
+            app:boxStrokeColor="@color/colorGreenMessage"
+            app:layout_constraintTop_toBottomOf="@id/f_profile_til_business_email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/f_profile_tiet_gvmnt_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_light_font"
+                    android:maxLines="1"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@color/colorValueGrey" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

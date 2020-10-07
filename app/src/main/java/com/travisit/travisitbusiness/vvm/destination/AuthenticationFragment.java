@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.text.Editable;
@@ -17,11 +18,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.travisit.travisitbusiness.data.Client;
 import com.travisit.travisitbusiness.databinding.FragmentAuthenticationBinding;
 import com.travisit.travisitbusiness.databinding.FragmentSplashBinding;
 import com.travisit.travisitbusiness.model.Business;
@@ -44,21 +47,23 @@ public class AuthenticationFragment extends Fragment {
         @Override
         public void afterTextChanged(Editable s) {
             if (getFieldText("email").length() == 0 ||
-                    getFieldText("password").length() == 0 ){
+                    getFieldText("password").length() < 6 ){
                 binding.fAuthBtnSignIn.setEnabled(false);
             } else {
                 binding.fAuthBtnSignIn.setEnabled(true);
             }
         }
     };
-
+    private Business user;
     public static AuthenticationFragment newInstance() {
         return new AuthenticationFragment();
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((AppActivity)getActivity()).changeBottomNavVisibility(View.GONE);
+        ((AppActivity)getActivity()).changeBottomNavVisibility(View.GONE,false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         binding = FragmentAuthenticationBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
@@ -68,6 +73,11 @@ public class AuthenticationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         preferences = new SharedPrefManager(getActivity());
         vm = ViewModelProviders.of(this).get(AuthenticationVM.class);
+        user = CompleteProfileFragmentArgs.fromBundle(getArguments()).getUser();
+        if (user != null) {
+            NavDirections action = AuthenticationFragmentDirections.actionFromAuthToCompleteProfile().setUser(user);
+            Navigation.findNavController(view).navigate(action);
+        }
         String gotToSignUpText = getResources().getString(R.string.go_to_sign_up);
         binding.fAuthTvGoToSignup.setText(Html.fromHtml(gotToSignUpText));
         handleUserInteractions(view);
@@ -96,10 +106,19 @@ public class AuthenticationFragment extends Fragment {
                     @Override
                     public void onChanged(Business business) {
                         preferences.saveUser(business);
-                        //TODO: CHECK USER STATUS TO NAVIGATE
+                        Client.reinstantiateClient(
+                                business.getToken()
+                        );
                         Navigation.findNavController(view).navigate(R.id.action_from_auth_to_home);
-                        //Navigation.findNavController(view).navigate(R.id.action_from_auth_to_complete_profile);
-
+                       /* if(business.getApprovementStatus().contains("inComplete")){
+                            NavDirections action = AuthenticationFragmentDirections.actionFromAuthToCompleteProfile().setUser(business);
+                            Navigation.findNavController(view).navigate(action);
+                        } else if(business.getApprovementStatus().contains("pending")){
+                            NavDirections action = AuthenticationFragmentDirections.actionFromAuthToShowAccountStatus().setIsVerified(false);
+                            Navigation.findNavController(view).navigate(action);
+                        } else {
+                            Navigation.findNavController(view).navigate(R.id.action_from_auth_to_home);
+                        }*/
                     }
                 });
             }

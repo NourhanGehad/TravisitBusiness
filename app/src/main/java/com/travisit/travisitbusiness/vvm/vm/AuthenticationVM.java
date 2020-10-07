@@ -67,6 +67,8 @@ public class AuthenticationVM extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        compositeDisposable.clear();
+        if(compositeDisposable != null) {
+            compositeDisposable.clear();
+        }
     }
 }

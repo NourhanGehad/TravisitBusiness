@@ -9,11 +9,45 @@ public class Offer implements Serializable {
     String description;
     String startDate;
     String endDate;
-    ArrayList<Integer> tags;
-    Integer branchID;
+    ArrayList<Integer> tags = null;
+    Integer branchID = null;
+    String firstImage = null;
+    String secondImage = null;
+    String thirdImage = null;
 
-    public Offer(Integer id, String title, String description, String startDate, String endDate, ArrayList<Integer> tags, Integer branchID) {
+    public Offer(Integer id, String title, String description, String startDate, String endDate, ArrayList<Integer> tags, Integer branchID, String firstImage, String secondImage, String thirdImage) {
         this.id = id;
+        this.title = title;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.tags = tags;
+        this.branchID = branchID;
+        this.firstImage = firstImage;
+        this.secondImage = secondImage;
+        this.thirdImage = thirdImage;
+    }
+
+    public Offer(int id, String title, String description, String startDate, String endDate, String firstImage, String secondImage, String thirdImage) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.firstImage = firstImage;
+        this.secondImage = secondImage;
+        this.thirdImage = thirdImage;
+    }
+//TODO REMOVE BELOW
+    public Offer(int id, String title, String description, String startDate, String endDate) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public Offer(String title, String description, String startDate, String endDate, ArrayList<Integer> tags, Integer branchID) {
         this.title = title;
         this.description = description;
         this.startDate = startDate;
@@ -76,5 +110,29 @@ public class Offer implements Serializable {
 
     public void setBranchID(Integer branchID) {
         this.branchID = branchID;
+    }
+
+    public String getFirstImage() {
+        return firstImage;
+    }
+
+    public void setFirstImage(String firstImage) {
+        this.firstImage = firstImage;
+    }
+
+    public String getSecondImage() {
+        return secondImage;
+    }
+
+    public void setSecondImage(String secondImage) {
+        this.secondImage = secondImage;
+    }
+
+    public String getThirdImage() {
+        return thirdImage;
+    }
+
+    public void setThirdImage(String thirdImage) {
+        this.thirdImage = thirdImage;
     }
 }

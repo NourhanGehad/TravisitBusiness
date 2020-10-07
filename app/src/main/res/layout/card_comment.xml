@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_comment_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+    <!-- User Picture -->
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/card_comment_user_picture"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        app:actualImageResource="@drawable/dummy_logo"
+        app:actualImageScaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:roundedCornerRadius="35dp"
+        app:roundingBorderColor="@color/colorBorderSummerSky"
+        app:roundingBorderWidth="1dp" />
+    <!-- Comment Backdrop -->
+    <View
+        android:id="@+id/card_comment_gray_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/card_comment_user_name"
+        app:layout_constraintStart_toStartOf="@id/card_comment_user_name"
+        app:layout_constraintEnd_toEndOf="@id/card_comment_text"
+        app:layout_constraintBottom_toBottomOf="@id/card_comment_text"
+        android:background="@drawable/rounded_corners_shape_10dp"
+        android:backgroundTint="#EBEBEB"/>
+    <!-- User name TextView -->
+    <TextView
+        android:id="@+id/card_comment_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/segoeui_font"
+        android:padding="5dp"
+        android:paddingStart="10dp"
+        android:textColor="@color/colorCorduray"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/card_comment_user_picture"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="User name" />
+    <!-- End date TextView -->
+    <TextView
+        android:id="@+id/card_comment_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sfpro_regular_font"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:textColor="@color/colorReceivedMessageText"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/card_comment_user_name"
+        app:layout_constraintTop_toBottomOf="@id/card_comment_user_name"
+        tools:text="@string/dummy_text" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
