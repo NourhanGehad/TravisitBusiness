@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.os.Handler;
@@ -19,11 +18,13 @@ import android.view.animation.AnimationUtils;
 import com.travisit.travisitbusiness.R;
 import com.travisit.travisitbusiness.data.Client;
 import com.travisit.travisitbusiness.databinding.FragmentSplashBinding;
-import com.travisit.travisitbusiness.model.Business;
 import com.travisit.travisitbusiness.utils.SharedPrefManager;
 import com.travisit.travisitbusiness.vvm.AppActivity;
-import com.travisit.travisitbusiness.vvm.vm.BranchesVM;
 
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
 public class SplashFragment extends Fragment {
     private FragmentSplashBinding binding;
     public SplashFragment() {
@@ -32,7 +33,7 @@ public class SplashFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ((AppActivity) getActivity()).changeBottomNavVisibility(View.GONE, false);
+        ((AppActivity) getActivity()).changeBottomNavVisibility(View.GONE);
         binding = FragmentSplashBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
@@ -43,36 +44,11 @@ public class SplashFragment extends Fragment {
         Animation aniFade = AnimationUtils.loadAnimation(getActivity(),R.anim.fade_in);
         binding.fSplashIvLogo.startAnimation(aniFade);
         binding.fSplashTvAppName.startAnimation(aniFade);
-
-        Business user = new SharedPrefManager(getActivity()).getUser();
-        if(user != null){
-            String userToken =  user.getToken();
-            if(userToken != null) {
-                Client.reinstantiateClient(
-                        userToken
-                );
-            }
-        }
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Navigation.findNavController(getView()).navigate(R.id.action_from_splash_to_auth_graph);
-               /* Log.d("wtf",userToken);*/
-                 /*if(user != null){
-                    if(user.getApprovementStatus().contains("inComplete")){
-                        NavDirections action = SplashFragmentDirections.actionFromSplashToCompleteProfile().setUser(user);
-                        Navigation.findNavController(view).navigate(action);
-                    } else if(user.getApprovementStatus().contains("pending")){
-                        NavDirections action = SplashFragmentDirections.actionFromSplashToShowAccountStatus().setIsVerified(false);
-                        Navigation.findNavController(view).navigate(action);
-                    } else {
-                        Navigation.findNavController(getView()).navigate(R.id.action_from_splash_to_home);
-                    }
-                } else {
-                    Navigation.findNavController(getView()).navigate(R.id.action_from_splash_to_auth_graph);
-                }*/
+                Navigation.findNavController(view).navigate(R.id.action_to_auth_graph);
             }
 
         }, 1500);
@@ -81,6 +57,10 @@ public class SplashFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        Client.reinstantiateClient(
+                new SharedPrefManager(getActivity()).getUserToken()
+        );
+        Log.d("heysaysme",new SharedPrefManager(getActivity()).getUserToken());
     }
 
     @Override
