@@ -3,62 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_nav_graph"
-    app:startDestination="@id/branchManagementFragment">
-    <action
-        android:id="@+id/action_to_add_offer"
-        app:destination="@id/offerManagementFragment"
-        app:enterAnim="@anim/slide_from_out_right_to_center"
-        app:exitAnim="@anim/slide_from_center_to_out_left">
-    </action>
-    <action
-        android:id="@+id/action_to_add_branch"
-        app:destination="@id/branchManagementFragment"
-        app:enterAnim="@anim/slide_from_out_right_to_center"
-        app:exitAnim="@anim/slide_from_center_to_out_left">
-    </action>
-
+    app:startDestination="@id/mapsFragment">
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.travisit.travisitbusiness.vvm.destination.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_from_splash_to_auth_graph"
+            android:id="@+id/action_to_auth_graph"
             app:destination="@id/auth_graph"
             app:enterAnim="@anim/slide_from_out_right_to_center"
             app:exitAnim="@anim/slide_from_center_to_out_left"
             app:popUpTo="@id/app_nav_graph"
             app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_from_splash_to_home"
-            app:destination="@id/homeFragment"
-            app:enterAnim="@anim/slide_from_out_right_to_center"
-            app:exitAnim="@anim/slide_from_center_to_out_left"
-            app:popUpTo="@id/app_nav_graph"
-            app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_from_splash_to_complete_profile"
-            app:destination="@id/auth_graph"
-            app:enterAnim="@anim/slide_from_out_right_to_center"
-            app:exitAnim="@anim/slide_from_center_to_out_right">
-            <argument
-                android:name="user"
-                android:defaultValue="@null"
-                app:argType="com.travisit.travisitbusiness.model.Business"
-                app:nullable="true"/>
-        </action>
-        <action
-            android:id="@+id/action_from_splash_to_show_account_status"
-            app:destination="@id/accountStatusFragment"
-            app:enterAnim="@anim/slide_from_out_right_to_center"
-            app:exitAnim="@anim/slide_from_center_to_out_left"
-            app:popUpTo="@id/authenticationFragment"
-            app:popUpToInclusive="false">
-            <argument
-                android:name="is_verified"
-                android:defaultValue="false"
-                app:argType="boolean" />
-        </action>
     </fragment>
     <navigation
         android:id="@+id/auth_graph"
@@ -68,11 +25,6 @@
             android:name="com.travisit.travisitbusiness.vvm.destination.AuthenticationFragment"
             android:label="fragment_authentication"
             tools:layout="@layout/fragment_authentication">
-            <argument
-                android:name="user"
-                android:defaultValue="@null"
-                app:argType="com.travisit.travisitbusiness.model.Business"
-                app:nullable="true"/>
             <action
                 android:id="@+id/action_from_auth_to_reg"
                 app:destination="@id/registrationFragment"
@@ -91,14 +43,17 @@
             <action
                 android:id="@+id/action_from_auth_to_complete_profile"
                 app:destination="@id/completeProfileFragment"
-                app:enterAnim="@anim/slide_from_out_right_to_center"
+                app:enterAnim="@anim/slide_from_out_left_to_center"
                 app:exitAnim="@anim/slide_from_center_to_out_right">
-                <argument
-                    android:name="user"
-                    android:defaultValue="@null"
-                    app:argType="com.travisit.travisitbusiness.model.Business"
-                    app:nullable="true"/>
+
             </action>
+            <action
+                android:id="@+id/action_from_auth_to_home"
+                app:destination="@id/homeFragment"
+                app:enterAnim="@anim/slide_from_out_right_to_center"
+                app:exitAnim="@anim/slide_from_center_to_out_left"
+                app:popUpTo="@id/authenticationFragment"
+                app:popUpToInclusive="false"/>
             <action
                 android:id="@+id/action_from_auth_to_show_account_status"
                 app:destination="@id/accountStatusFragment"
@@ -111,13 +66,6 @@
                     android:defaultValue="false"
                     app:argType="boolean" />
             </action>
-            <action
-                android:id="@+id/action_from_auth_to_home"
-                app:destination="@id/homeFragment"
-                app:enterAnim="@anim/slide_from_out_right_to_center"
-                app:exitAnim="@anim/slide_from_center_to_out_left"
-                app:popUpTo="@id/app_nav_graph"
-                app:popUpToInclusive="false"/>
         </fragment>
         <fragment
             android:id="@+id/registrationFragment"
@@ -185,14 +133,6 @@
                     android:defaultValue="false"
                     app:argType="boolean" />
             </action>
-            <action
-                android:id="@+id/action_from_complete_profile_to_home"
-                app:destination="@id/homeFragment"
-                app:enterAnim="@anim/slide_from_out_right_to_center"
-                app:exitAnim="@anim/slide_from_center_to_out_left"
-                app:popUpTo="@id/authenticationFragment"
-                app:popUpToInclusive="false">
-            </action>
         </fragment>
         <fragment
             android:id="@+id/resetPasswordCodeFragment"
@@ -229,7 +169,6 @@
                 app:argType="string"
                 app:nullable="true"/>
         </fragment>
-
     </navigation>
 
     <fragment
@@ -248,11 +187,6 @@
                 app:argType="com.travisit.travisitbusiness.model.Offer"
                 app:nullable="true"/>
         </action>
-        <action
-            android:id="@+id/action_from_home_to_profile"
-            app:destination="@id/profileFragment"
-            app:enterAnim="@anim/slide_from_out_right_to_center"
-            app:exitAnim="@anim/slide_from_center_to_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/branchesFragment"
@@ -261,7 +195,7 @@
         tools:layout="@layout/fragment_branches">
         <action
             android:id="@+id/action_from_branches_to_edit_branch"
-            app:destination="@id/branchManagementFragment"
+            app:destination="@id/editBranchFragment"
             app:enterAnim="@anim/slide_from_out_right_to_center"
             app:exitAnim="@anim/slide_from_center_to_out_left">
             <argument
@@ -281,20 +215,7 @@
         android:id="@+id/accountFragment"
         android:name="com.travisit.travisitbusiness.vvm.destination.AccountFragment"
         android:label="fragment_account"
-        tools:layout="@layout/fragment_account">
-        <action
-            android:id="@+id/action_from_account_to_profile"
-            app:destination="@id/profileFragment"
-            app:enterAnim="@anim/slide_from_out_right_to_center"
-            app:exitAnim="@anim/slide_from_center_to_out_left"/>
-        <action
-            android:id="@+id/action_from_account_logout"
-            app:destination="@id/auth_graph"
-            app:enterAnim="@anim/slide_from_out_right_to_center"
-            app:exitAnim="@anim/slide_from_center_to_out_left"
-            app:popUpTo="@id/app_nav_graph"
-            app:popUpToInclusive="true"/>
-    </fragment>
+        tools:layout="@layout/fragment_account" />
     <fragment
         android:id="@+id/accountStatusFragment"
         android:name="com.travisit.travisitbusiness.vvm.destination.AccountStatusFragment"
@@ -314,12 +235,10 @@
             app:popUpTo="@id/app_nav_graph"
             app:popUpToInclusive="true"/>
         <action
-            android:id="@+id/action_from_account_status_logout"
-            app:destination="@id/auth_graph"
+            android:id="@+id/action_from_account_status_to_home"
+            app:destination="@id/homeFragment"
             app:enterAnim="@anim/slide_from_out_right_to_center"
-            app:exitAnim="@anim/slide_from_center_to_out_left"
-            app:popUpTo="@id/app_nav_graph"
-            app:popUpToInclusive="true"/>
+            app:exitAnim="@anim/slide_from_center_to_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/offerDetailsFragment"
@@ -332,8 +251,8 @@
             app:argType="com.travisit.travisitbusiness.model.Offer"
             app:nullable="true"/>
         <action
-            android:id="@+id/action_from_offer_details_to_edit_offer"
-            app:destination="@id/offerManagementFragment"
+            android:id="@+id/action_from_offer_details_to_edit_management"
+            app:destination="@id/offerDetailsFragment"
             app:enterAnim="@anim/slide_from_out_right_to_center"
             app:exitAnim="@anim/slide_from_center_to_out_left">
             <argument
@@ -355,10 +274,10 @@
             app:nullable="true"/>
     </fragment>
     <fragment
-        android:id="@+id/branchManagementFragment"
-        android:name="com.travisit.travisitbusiness.vvm.destination.BranchManagementFragment"
+        android:id="@+id/editBranchFragment"
+        android:name="com.travisit.travisitbusiness.EditBranchFragment"
         android:label="fragment_edit_branch"
-        tools:layout="@layout/fragment_branch_management" >
+        tools:layout="@layout/fragment_edit_branch" >
         <argument
             android:name="branch"
             android:defaultValue="@null"
@@ -369,30 +288,6 @@
             app:argType="com.google.android.gms.maps.model.LatLng"
             app:nullable="true"
             android:defaultValue="@null" />
-        <action
-            android:id="@+id/action_branch_to_map"
-            app:destination="@id/mapsFragment"
-            app:enterAnim="@anim/slide_from_out_right_to_center"
-            app:exitAnim="@anim/slide_from_center_to_out_left"
-            app:popUpTo="@id/app_nav_graph"
-            app:popUpToInclusive="true">
-        </action>
-    </fragment>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.travisit.travisitbusiness.vvm.destination.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
-        android:id="@+id/editBranchFragment"
-        android:name="com.travisit.travisitbusiness.vvm.destination.EditBranchFragment"
-        android:label="fragment_edit_branch"
-        tools:layout="@layout/fragment_edit_branch" >
-        <argument
-            android:name="branch"
-            android:defaultValue="@null"
-            app:argType="com.travisit.travisitbusiness.model.Branch"
-            app:nullable="true"/>
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
@@ -401,16 +296,12 @@
         tools:layout="@layout/fragment_maps" >
         <action
             android:id="@+id/action_map_to_branch"
-            app:destination="@id/branchManagementFragment"
+            app:destination="@id/editBranchFragment"
             app:enterAnim="@anim/slide_from_out_right_to_center"
             app:exitAnim="@anim/slide_from_center_to_out_left"
             app:popUpTo="@id/app_nav_graph"
             app:popUpToInclusive="true">
-            <argument
-                android:name="location"
-                app:argType="com.google.android.gms.maps.model.LatLng"
-                app:nullable="true"
-                android:defaultValue="@null" />
         </action>
     </fragment>
+
 </navigation>
