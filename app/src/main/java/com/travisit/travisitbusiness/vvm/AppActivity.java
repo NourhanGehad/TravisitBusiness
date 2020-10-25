@@ -2,40 +2,40 @@ package com.travisit.travisitbusiness.vvm;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.travisit.travisitbusiness.R;
 import com.travisit.travisitbusiness.databinding.ActivityAppBinding;
-import com.travisit.travisitbusiness.utils.SharedPrefManager;
+import com.travisit.travisitbusiness.utils.InternetConnection;
 import com.travisit.travisitbusiness.vvm.observer.BottomNavigationControl;
 import com.travisit.travisitbusiness.vvm.observer.IOnBackPressed;
-
-import java.util.prefs.Preferences;
-
-import javax.inject.Inject;
 
 public class AppActivity extends AppCompatActivity implements BottomNavigationControl {
     private ActivityAppBinding binding;
     private View view;
     protected IOnBackPressed onBackPressedListener;
     NavHostFragment navHostFragment;
-
+    Snackbar snackbar;
+    private IntentFilter internetIntentFilter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAppBinding.inflate(getLayoutInflater());
         view = binding.getRoot();
         setContentView(view);
+        observeOnConnection();
         navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.activity_app_nav_host_fragment);
         NavigationUI.setupWithNavController(binding.activityAppBottomNavBar, navHostFragment.getNavController());
@@ -119,7 +119,6 @@ public class AppActivity extends AppCompatActivity implements BottomNavigationCo
             return true;
         }
     }
-
     public  boolean isWriteStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -138,4 +137,25 @@ public class AppActivity extends AppCompatActivity implements BottomNavigationCo
             return true;
         }
     }
+    public void showSnakeBar(String txt,int duration,int textColor){
+        snackbar=Snackbar.make(view,txt,Snackbar.LENGTH_INDEFINITE);
+        snackbar.setDuration(duration);
+        snackbar.setTextColor(this.getResources().getColor(textColor));
+        snackbar.show();
+    }
+    public InternetConnection internet;
+    public void observeOnConnection(){
+        internet=new InternetConnection(getApplicationContext());
+        internet.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    showSnakeBar("Internet Is Connected",5000,R.color.colorMediumSeaGreen);
+                }else {
+                    showSnakeBar("Internet Is Failed",5000,R.color.colorRedMessage);
+                }
+            }
+        });
+    }
+
 }

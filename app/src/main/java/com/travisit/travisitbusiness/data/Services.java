@@ -71,9 +71,7 @@ public interface Services {
 
     //Offers
     @GET("offers")
-    Observable<ArrayList<Offer>> getOffers(
-            @Query("startDate") String startDate,
-            @Query("endDate") String endDate );
+    Observable<ArrayList<Offer>> getOffers(@Query("startDate") String startDate, @Query("endDate") String endDate );
 
     @POST("offers")
     Observable<Offer> addOffer(@Body Offer offer); //TODO : Add offer attributes

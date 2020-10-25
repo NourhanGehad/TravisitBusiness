@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.travisit.travisitbusiness.data.Client;
@@ -31,7 +32,10 @@ public class BranchesVM extends ViewModel {
     public MutableLiveData<ArrayList<Branch>> branchesMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<Branch> branchMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<String> deletingMutableLiveData = new MutableLiveData<>();
-
+    public MutableLiveData<LatLng> myLocation=new MutableLiveData<>();
+    public MutableLiveData<String>locationName=new MutableLiveData<>();
+    //public static MutableLiveData<Branch>staticBranchMutableLiveData=new MutableLiveData<>();
+    public static String branchNameTxt= "";
     CompositeDisposable compositeDisposable;
 
     public void getBranches() {
@@ -45,7 +49,6 @@ public class BranchesVM extends ViewModel {
             branchesMutableLiveData.setValue(branches);
         }, e -> Log.d("PVMError", e.getMessage())));
     }
-
     public void addBranch(Branch branch) {
         Observable<Branch> observable = Client.getINSTANCE().addBranch(branch)
                 .subscribeOn(Schedulers.io())
@@ -61,6 +64,7 @@ public class BranchesVM extends ViewModel {
 
         compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(observable.subscribe(o -> branchMutableLiveData.setValue(o), e -> Log.d("PVMError", e.getMessage())));
+        //staticBranchMutableLiveData.setValue(branchMutableLiveData.getValue());
     }
     public void deleteBranch(int id) {
         Completable observable = Client.getINSTANCE().deleteBranch(id)
@@ -70,8 +74,6 @@ public class BranchesVM extends ViewModel {
         compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(observable.subscribe(() -> deletingMutableLiveData.setValue("done"), e -> Log.d("PVMError", e.getMessage())));
     }
-
-
     private ArrayList<Branch> parseBranches(JsonObject jsonObject) {
         ArrayList<Branch> branches = new ArrayList<Branch>();
         JsonArray jsonArray = jsonObject.get("rows").getAsJsonArray();

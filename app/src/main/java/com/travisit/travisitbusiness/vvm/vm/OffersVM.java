@@ -57,6 +57,7 @@ public class OffersVM extends ViewModel {
         compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(observable.subscribe(o -> offerMutableLiveData.setValue(o), e -> Log.d("PVMError", e.getMessage())));
     }
+
     public void editOffer(Offer offer) {
         Observable<Offer> observable = Client.getINSTANCE().updateOffer(offer)
                 .subscribeOn(Schedulers.io())
@@ -74,7 +75,7 @@ public class OffersVM extends ViewModel {
         compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(observable.subscribe(() ->
                         deletingMutableLiveData.setValue("done")
-             , e -> Log.d("PVMError", e.getMessage())));
+                , e -> Log.d("PVMError", e.getMessage())));
     }
 
     public void uploadFiles(String filePath1, String filePath2, String filePath3) {
@@ -116,8 +117,8 @@ public class OffersVM extends ViewModel {
 
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject offerObject = jsonArray.get(i).getAsJsonObject();
-            Log.d("addedoffer","startdate: "+offerObject.get("startDate").getAsString());
-            Log.d("addedoffer","enddate: "+offerObject.get("endDate").getAsString());
+            Log.d("addedoffer", "startdate: " + offerObject.get("startDate").getAsString());
+            Log.d("addedoffer", "enddate: " + offerObject.get("endDate").getAsString());
 /*
             String img1 = "";
             String img2 = "";
@@ -144,6 +145,7 @@ public class OffersVM extends ViewModel {
         }
         return offers;
     }
+
     public void getOfferComments(Integer offerId, Integer pageNumber, Integer pageSize) {
         Observable<ArrayList<OfferComment>> observable = Client.getINSTANCE().getOfferComments(offerId, pageNumber, pageSize)
                 .subscribeOn(Schedulers.io())
@@ -151,14 +153,15 @@ public class OffersVM extends ViewModel {
 
         compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(observable.subscribe(o -> {
-            Log.d("hey","heyg"+o.size());
+            Log.d("hey", "heyg" + o.size());
             offerCommentsMutableLiveData.setValue(o);
         }, e -> Log.d("PVMError", e.getMessage())));
     }
+
     @Override
     protected void onCleared() {
         super.onCleared();
-        if(compositeDisposable != null) {
+        if (compositeDisposable != null) {
             compositeDisposable.clear();
         }
     }

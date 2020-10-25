@@ -87,9 +87,6 @@ public class ProfileVM extends ViewModel {
         return categories;
     }
 
-
-
-
     public void uploadFile(String filePath,FileType fileType) {
         if (filePath != null){
             File file = new File(filePath);

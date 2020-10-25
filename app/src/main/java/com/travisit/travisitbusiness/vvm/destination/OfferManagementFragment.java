@@ -108,17 +108,14 @@ public class OfferManagementFragment extends Fragment {
     public OfferManagementFragment() {
         // Required empty public constructor
     }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         ((AppActivity) getActivity()).changeBottomNavVisibility(View.GONE, false);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         binding = FragmentOfferManagementBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -134,7 +131,6 @@ public class OfferManagementFragment extends Fragment {
         }
         handleUserInteractions(view);
     }
-
     private void handleUserInteractions(View view) {
         binding.fOfferManagementSdv1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,7 +208,6 @@ public class OfferManagementFragment extends Fragment {
         binding.fOfferManagementTietStartDate.addTextChangedListener(watcher);
         binding.fOfferManagementTietEndDate.addTextChangedListener(watcher);
     }
-
     private void createOfferObject() {
         offer = new Offer(
                 getFieldText("title"),
@@ -223,7 +218,6 @@ public class OfferManagementFragment extends Fragment {
                 Integer.parseInt(getFieldText("branch id"))
         );
     }
-
     private void updateUI(ManagementOption option) {
         branchesVM.getBranches();
         branchesVM.branchesMutableLiveData.observe(getActivity(), new Observer<ArrayList<Branch>>() {
@@ -267,7 +261,6 @@ public class OfferManagementFragment extends Fragment {
             startActivityForResult(intent, requestCode);
         }
     }
-
     private void uploadPhotos(View view){
         vm.uploadFiles(firstImagePath,secondImagePath,thirdImagePath);
         vm.photosMutableLiveData.observe(getActivity(), new Observer<Offer>() {
@@ -277,7 +270,6 @@ public class OfferManagementFragment extends Fragment {
             }
         });
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -298,7 +290,6 @@ public class OfferManagementFragment extends Fragment {
             }
         }
     }
-
     private String getFieldText(String fieldName) {
         switch (fieldName) {
             case "name":
@@ -315,7 +306,6 @@ public class OfferManagementFragment extends Fragment {
                 return "invalid";
         }
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -12,7 +12,6 @@ public class OfferComment implements Serializable {
 
     public OfferComment() {
     }
-
     public OfferComment(Integer id, String comment, Integer offerId, Integer travelerId, Integer businessHelperID) {
         this.id = id;
         this.comment = comment;
