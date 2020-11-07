@@ -2,9 +2,9 @@ package com.travisit.travisitbusiness.vvm.destination;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -12,17 +12,17 @@ import androidx.navigation.Navigation;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -33,7 +33,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,32 +43,29 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.travisit.travisitbusiness.R;
+import com.travisit.travisitbusiness.data.Const;
 import com.travisit.travisitbusiness.databinding.FragmentMapsBinding;
+import com.travisit.travisitbusiness.utils.IntentServices;
 import com.travisit.travisitbusiness.vvm.AppActivity;
-import com.travisit.travisitbusiness.vvm.vm.BranchesVM;
-import com.travisit.travisitbusiness.vvm.vm.RegistrationVM;
+import com.travisit.travisitbusiness.vvm.vm.MapVM;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 public class MapsFragment extends Fragment {
+    private MapVM VM;
     private View view;
-    private BranchesVM vm;
     private FragmentMapsBinding binding;
     private GoogleMap myMap;
     LatLng myLocation;
     private static  final int REQUEST_LOCATION_CODE=1;
-    FusedLocationProviderClient fusedLocationProviderClient;
+    //FusedLocationProviderClient fusedLocationProviderClient;
+    private ResultReceiver resultReceiver;
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
          * Manipulates the map once available.
@@ -87,15 +86,18 @@ public class MapsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState) {
-        ((AppActivity)getActivity()).changeBottomNavVisibility(View.GONE);
+        ((AppActivity)getActivity()).changeBottomNavVisibility(View.GONE,false);
         binding = FragmentMapsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         this.view=view;
+        VM= ViewModelProviders.of(this).get(MapVM.class);
+        observeOnLivaData();
         return view;
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        resultReceiver=new AddressResultReceiver(new Handler());
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
@@ -103,7 +105,6 @@ public class MapsFragment extends Fragment {
         handleUserInteractions();
         confirmClick(view);
         keyboardSearchButton();
-        vm = ViewModelProviders.of(this).get(BranchesVM.class);
     }
     @Override
     public void onStart() {
@@ -114,6 +115,7 @@ public class MapsFragment extends Fragment {
     }
     private void addMarker(LatLng latLng,String locatioName) {
         // circle settings
+        //locationNames=locatioName;
         myMap.clear();
         float radiusM = (float) 10000.0; // your radius in meters
         // draw circle
@@ -129,7 +131,7 @@ public class MapsFragment extends Fragment {
         myMap.addGroundOverlay(new GroundOverlayOptions().image(bmD).position(latLng,radiusM*2,radiusM*2).transparency(0.4f));
         myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10.0f));
         myMap.addMarker(new MarkerOptions().position(latLng).title(locatioName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
-        myLocation=latLng;//passing location in Map
+        myLocation=new LatLng(latLng.latitude,latLng.longitude);//passing location in Map
     }
     private void handleUserInteractions() {
         binding.fMapLayoutInActiveSearchBar.layoutInactiveSearchBarTvSearch.setOnClickListener(new View.OnClickListener() {
@@ -169,27 +171,34 @@ public class MapsFragment extends Fragment {
                 }
             }
         });
+        binding.fMapLayoutInActiveSearchBar.layoutInactiveSearchBarIvFilter.setVisibility(View.GONE);
 
     }
     private void performSearch() {
-       String locationName =binding.fMapLayoutActiveSearchBar.layoutSearchBarEtSearch.getText().toString();
-       try {
-           if (!locationName.isEmpty()){
-               List<Address> addressList=null;
-               Geocoder geocoder=new Geocoder(getActivity(), Locale.getDefault());
-               try {
-                   addressList= geocoder.getFromLocationName(locationName,1);
-               } catch (Exception e) {
-                   e.printStackTrace();
-               }
-               Address address=addressList.get(0);
-               LatLng latLng=new LatLng(address.getLatitude(),address.getLongitude());
-               addMarker(latLng,locationName);
-           }
-       }catch (Exception e){
-           Toast.makeText(getContext(), "Sorry this is not Location", Toast.LENGTH_SHORT).show();
-           e.printStackTrace();
-       }
+        if (((AppActivity)getActivity()).internet.getValue()){
+            String locationNameTxt =binding.fMapLayoutActiveSearchBar.layoutSearchBarEtSearch.getText().toString();
+            try {
+                if (!locationNameTxt.isEmpty()){
+                    List<Address> addressList=null;
+                    Geocoder geocoder=new Geocoder(getActivity(), Locale.getDefault());
+                    try {
+                        addressList= geocoder.getFromLocationName(locationNameTxt,1);
+                    } catch (Exception e) {
+                        Log.e("Map",e.getMessage());
+                    }
+                    Address address=addressList.get(0);
+                    LatLng latLng=new LatLng(address.getLatitude(),address.getLongitude());
+                    //addMarker(latLng,returnLocationName(latLng));
+                    VM.locationLiveData.setValue(latLng);
+                    fetchLocationName(latLng);
+                }
+            }catch (Exception e){
+                Toast.makeText(getContext(), "Sorry this is not Location", Toast.LENGTH_SHORT).show();
+                Log.e("Map",e.getMessage());
+            }
+        }else {
+            ((AppActivity)getActivity()).showSnakeBar("Internet Is Failed",5000,R.color.colorRedMessage);
+        }
     }
     private void keyboardSearchButton(){
         TextView.OnEditorActionListener onEditorActionListener=new TextView.OnEditorActionListener() {
@@ -210,9 +219,13 @@ public class MapsFragment extends Fragment {
                 //performSearch();
                 //vm.myLocation.setValue(myLocation);
                 //Navigation.findNavController(view).navigate(R.id.action_map_to_branch);
-                final NavController navController=Navigation.findNavController(view);
-                MapsFragmentDirections.ActionMapToBranch actionMapToBranch= MapsFragmentDirections.actionMapToBranch().setLocation(myLocation);
-                navController.navigate(actionMapToBranch);
+                if (VM.locationNameLiveData.getValue().isEmpty()){
+                    Toast.makeText(getContext(), "It Is Not a Specific Location", Toast.LENGTH_SHORT).show();
+                }else {
+                    final NavController navController=Navigation.findNavController(view);
+                    MapsFragmentDirections.ActionMapToBranch actionMapToBranch= MapsFragmentDirections.actionMapToBranch().setLocation(myLocation);
+                    navController.navigate(actionMapToBranch);
+                }
             }
         });
     }
@@ -226,38 +239,48 @@ public class MapsFragment extends Fragment {
     }
     @SuppressLint("MissingPermission")
     private LatLng getMyLocation(){
+        /*
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(getActivity());
         fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
-                String locatioName=returnLocationName(task.getResult());
-                LatLng latLng=new LatLng(task.getResult().getLatitude(),task.getResult().getLongitude());
-                addMarker(latLng,locatioName);
-                //Toast.makeText(getActivity(), locatioName, Toast.LENGTH_SHORT).show();
+                if(task!=null){
+                    LatLng latLng=new LatLng(task.getResult().getLatitude(),task.getResult().getLongitude());
+                    String locatioName=returnLocationName(latLng);
+                    addMarker(latLng,locatioName);
+                }
             }
-        });
+        });*/
+        //*****************************
+        LocationRequest locationRequest=new LocationRequest();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(3000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        LocationServices.getFusedLocationProviderClient(getActivity())
+                .requestLocationUpdates(locationRequest,new LocationCallback(){
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
+                        super.onLocationResult(locationResult);
+                        LocationServices.getFusedLocationProviderClient(getActivity())
+                                .removeLocationUpdates(this);
+                        if(locationResult!=null&&locationResult.getLocations().size()>0){
+                            int lastIndex=locationResult.getLocations().size()-1;
+                            LatLng latLng=new LatLng(locationResult.getLocations().get(lastIndex).getLatitude(),locationResult.getLocations().get(lastIndex).getLongitude());
+                            //locationNames.setValue(returnLocationName(latLng));
+                            VM.locationLiveData.setValue(latLng);
+                            //addMarker(latLng,locationNames);
+
+                        }
+                    }
+                }, Looper.getMainLooper());
         return null;
     }
-    private String returnLocationName(Location location){
-        String locationName="";
-        if(location!=null){
-            Geocoder geocoder=new Geocoder(getActivity(),Locale.getDefault());
-            try {
-                List<Address>addressList=geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
-                if(addressList!=null&&addressList.size()>0){
-                    if(addressList.get(0).getThoroughfare()!=null){
-                        locationName+=addressList.get(0).getThoroughfare()+" ";
-                    }
-                    if(addressList.get(0).getLocality()!=null){
-                        locationName+=addressList.get(0).getLocality()+" ";
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        binding.fMapLayoutInActiveSearchBar.layoutInactiveSearchBarTvSearch.setText(locationName);
-        return locationName;
+    private void fetchLocationName(LatLng latLng){
+        Intent intent=new Intent(getActivity(), IntentServices.class);
+        intent.putExtra(Const.ADDRESS_RECEIVR,resultReceiver);
+        intent.putExtra(Const.LOCATION_DATA_EXTRA,latLng);
+        Log.e("NewMap","fgdfsddfgdfsdsfgfsd");
+        getActivity().startService(intent);
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -272,5 +295,37 @@ public class MapsFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_map_to_branch);
             }
         }
+    }
+    private class AddressResultReceiver extends ResultReceiver {
+
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            Log.e("NewMap","resultData.getString(Const.RESULT_DATA_KEY)");
+            super.onReceiveResult(resultCode, resultData);
+            if (resultCode==Const.SUCCESS_RESULT){
+                Log.e("NewMap",resultData.getString(Const.RESULT_ADDRESS_KEY));
+                VM.locationNameLiveData.setValue(resultData.getString(Const.RESULT_ADDRESS_KEY));
+            }else {
+                Log.e("NewMapError",resultData.getString(Const.RESULT_ADDRESS_KEY));
+            }
+        }
+    }
+    public void observeOnLivaData(){
+        VM.locationLiveData.observe(getActivity(), new Observer<LatLng>() {
+            @Override
+            public void onChanged(LatLng latLng) {
+                fetchLocationName(latLng);
+            }
+        });
+        VM.locationNameLiveData.observe(getActivity(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                addMarker(VM.locationLiveData.getValue(),s);
+                binding.fMapLayoutInActiveSearchBar.layoutInactiveSearchBarTvSearch.setText(s);
+            }
+        });
     }
 }

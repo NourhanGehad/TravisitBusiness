@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,11 +33,14 @@ import com.travisit.travisitbusiness.R;
 import com.travisit.travisitbusiness.data.Client;
 import com.travisit.travisitbusiness.databinding.FragmentCompleteProfileBinding;
 import com.travisit.travisitbusiness.model.Business;
+import com.travisit.travisitbusiness.utils.FileType;
 import com.travisit.travisitbusiness.vvm.adapter.CategoriesAdapter;
 import com.travisit.travisitbusiness.model.Category;
 import com.travisit.travisitbusiness.utils.PathUtil;
 import com.travisit.travisitbusiness.utils.SharedPrefManager;
 import com.travisit.travisitbusiness.vvm.AppActivity;
+import com.travisit.travisitbusiness.vvm.observer.BaseBackPressedListener;
+import com.travisit.travisitbusiness.vvm.observer.IOnBackPressed;
 import com.travisit.travisitbusiness.vvm.vm.ProfileVM;
 
 import java.util.ArrayList;
@@ -154,7 +158,7 @@ public class CompleteProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!vm.selectedCategories.isEmpty()) {
-/*
+
                     vm.editProfile(getFieldText("name"),
                             getFieldText("email"),
                             getFieldText("government issued number"));
@@ -162,9 +166,19 @@ public class CompleteProfileFragment extends Fragment {
                         @Override
                         public void onChanged(JsonObject jsonObject) {
                             //TODO: Move the user to the waiting for approval screen
+                            /*56656546564546564564546546565465465464565446*/
+                            //vm.getProfile();
+//                            final NavController navController=Navigation.findNavController(view);
+//                            CompleteProfileFragmentDirections.ActionFromCompleteProfileToShowAccountStatus actionToShowStatusFragment= CompleteProfileFragmentDirections.actionFromCompleteProfileToShowAccountStatus().setIsVerified(false);
+//                            navController.navigate(actionToShowStatusFragment);
                         }
                     });
-*/
+//                    vm.businessMutableLiveData.observe(getActivity(), new Observer<Business>() {
+//                        @Override
+//                        public void onChanged(Business business) {
+//                            preferences.saveUser(business);
+//                        }
+//                    });
                     if (!logoPath.equals("") && !gviPath.equals("")) {
                         Boolean hasReadPermission = isReadStoragePermissionGranted();
                         if(hasReadPermission){
@@ -173,55 +187,66 @@ public class CompleteProfileFragment extends Fragment {
                                 @Override
                                 public void onChanged(Business business) {
                                     Log.d("YOU", "DID IT");
+                                    preferences.saveUser(business);
+                                    final NavController navController=Navigation.findNavController(view);
+                                    CompleteProfileFragmentDirections.ActionFromCompleteProfileToShowAccountStatus actionToShowStatusFragment= CompleteProfileFragmentDirections.actionFromCompleteProfileToShowAccountStatus().setIsVerified(false);
+                                    navController.navigate(actionToShowStatusFragment);
                                 }
                             });
                             vm.editProfile(getFieldText("name"),
                                     getFieldText("email"),
                                     getFieldText("government issued number"));
-                            vm.profileMutableLiveData.observe(getActivity(), new Observer<JsonObject>() {
+                          /*  vm.profileMutableLiveData.observe(getActivity(), new Observer<JsonObject>() {
                                 @Override
                                 public void onChanged(JsonObject jsonObject) {
                                     //TODO TODO TODO
                                     try {
-                                        Thread.sleep(500);
+                                        Thread.sleep(350);
+                                        //((AppActivity)getActivity()).setOnBackPressedListener(null);
+                                       // Navigation.findNavController(view).navigate(R.id.action_from_complete_profile_to_home);
                                         Navigation.findNavController(view).navigate(R.id.action_from_complete_profile_to_home);
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
                                 }
-                            });
+                            });*/
                         } else {
                             //REQUEST
+                            //isReadStoragePermissionGranted();
                         }
 
                     } else {
                         //TODO: Tell the user to insert both images
+                        Toast.makeText(getContext(), "Please Select Images", Toast.LENGTH_SHORT).show();
                     }
-//                    if (!logoPath.equals("")) {
-//                       /* Bitmap bitmap = getBitmapFromPath(logoPath);
-//                        Bitmap compressedBitmap = compressImage(bitmap);*/
+                    if (!logoPath.equals("")) {
+                       /* Bitmap bitmap = getBitmapFromPath(logoPath);
+                        Bitmap compressedBitmap = compressImage(bitmap);*/
 //                        vm.uploadFile(logoPath, getActivity(), FileType.LOGO);
-//                        vm.fileLMutableLiveData.observe(getActivity(), new Observer<Business>() {
-//                            @Override
-//                            public void onChanged(Business business) {
-//                                preferences.saveUser(business);
-//                                Log.d("businessXXXXX", business.getLogo());
-//                            }
-//                        });
-//                    }
-//                    if (!gviPath.equals("")) {
+                        vm.uploadFile(logoPath, FileType.LOGO);
+                        vm.fileLMutableLiveData.observe(getActivity(), new Observer<Business>() {
+                            @Override
+                            public void onChanged(Business business) {
+                                preferences.saveUser(business);
+                                Log.d("businessXXXXX", business.getLogo());
+                            }
+                        });
+                    }
+                    if (!gviPath.equals("")) {
 //                        vm.uploadFile(gviPath, getActivity(), FileType.GOVERNMENT_ISSUED_NUMBER);
-//                        vm.fileGMutableLiveData.observe(getActivity(), new Observer<Business>() {
-//                            @Override
-//                            public void onChanged(Business business) {
-//                                preferences.saveUser(business);
-//                                Log.d("businessXXXXX", business.getGovernmentIssuedNumberImage());
-//                            }
-//                        });
-//                    }
+                        vm.uploadFile(gviPath, FileType.GOVERNMENT_ISSUED_NUMBER);
+                        vm.fileGMutableLiveData.observe(getActivity(), new Observer<Business>() {
+                            @Override
+                            public void onChanged(Business business) {
+                                preferences.saveUser(business);
+                                Log.d("businessXXXXX", business.getGovernmentIssuedNumberImage());
+                            }
+                        });
+                    }
 
                 } else {
                     //TODO Show a message with missing categories
+                    Toast.makeText(getContext(), "Please Select Some Categories", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -309,10 +334,10 @@ public class CompleteProfileFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= 23) {
             if (getActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                Log.v("AppActivity","Permission is granted1");
+                Log.v("AppActivity","Permission is granted");
                 return true;
             } else {
-                Log.v("AppActivity","Permission is revoked1");
+                Log.v("AppActivity","Permission is revoked");
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 3);
                 return false;
             }
@@ -327,5 +352,10 @@ public class CompleteProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 }

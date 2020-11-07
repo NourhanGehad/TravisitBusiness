@@ -106,11 +106,12 @@ public class RegistrationFragment extends Fragment {
                         Navigation.findNavController(view).navigate(action);
 
                         //Toast.makeText(getActivity(),business.getId().toString(), Toast.LENGTH_SHORT).show();
-//                        vm.business = business;
-//                        if (business != null && !business.getId().isEmpty() && business.getId() != null) {
+                        //vm.business = business;
+//                        if (business != null && !business.getId().toString().isEmpty() && business.getId() != null) {
 //                            Toast.makeText(getActivity(), "Sign up was successful. You can Login now", Toast.LENGTH_SHORT).show();
 //                            Navigation.findNavController(view).navigate(R.id.action_signup_to_signin);
-//
+//                    }
+
                     }
                 });
             }

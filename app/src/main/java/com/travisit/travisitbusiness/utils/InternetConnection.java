@@ -86,11 +86,13 @@ public class InternetConnection extends LiveData<Boolean>{
     @Override
     protected void onInactive() {
         super.onInactive();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            connectivityManager.unregisterNetworkCallback(connectivityManagerCallBack());
-        } else {
-            context.unregisterReceiver(networkReceiver);
-        }
+        try{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                connectivityManager.unregisterNetworkCallback(connectivityManagerCallBack());
+            } else {
+                context.unregisterReceiver(networkReceiver);
+            }
+        }catch (Exception e){ }
     }
 
 

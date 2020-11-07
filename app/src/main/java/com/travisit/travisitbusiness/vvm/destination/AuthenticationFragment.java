@@ -46,8 +46,7 @@ public class AuthenticationFragment extends Fragment {
         {}
         @Override
         public void afterTextChanged(Editable s) {
-            if (getFieldText("email").length() == 0 ||
-                    getFieldText("password").length() < 6 ){
+            if (getFieldText("email").length() == 0 || getFieldText("password").length() < 6 ){
                 binding.fAuthBtnSignIn.setEnabled(false);
             } else {
                 binding.fAuthBtnSignIn.setEnabled(true);
@@ -98,27 +97,25 @@ public class AuthenticationFragment extends Fragment {
         binding.fAuthBtnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vm.signInBusiness(
-                        getFieldText("email"),
-                        getFieldText("password")
-                );
+                vm.signInBusiness(getFieldText("email"), getFieldText("password"));
                 vm.businessMutableLiveData.observe(getActivity(), new Observer<Business>() {
                     @Override
                     public void onChanged(Business business) {
-                        preferences.saveUser(business);
-                        Client.reinstantiateClient(
-                                business.getToken()
-                        );
-                        Navigation.findNavController(view).navigate(R.id.action_from_auth_to_home);
-                       /* if(business.getApprovementStatus().contains("inComplete")){
-                            NavDirections action = AuthenticationFragmentDirections.actionFromAuthToCompleteProfile().setUser(business);
-                            Navigation.findNavController(view).navigate(action);
-                        } else if(business.getApprovementStatus().contains("pending")){
-                            NavDirections action = AuthenticationFragmentDirections.actionFromAuthToShowAccountStatus().setIsVerified(false);
-                            Navigation.findNavController(view).navigate(action);
-                        } else {
-                            Navigation.findNavController(view).navigate(R.id.action_from_auth_to_home);
-                        }*/
+                        if (business!=null){
+                            preferences.saveUser(business);
+                            Client.reinstantiateClient(business.getToken());
+                            //Navigation.findNavController(view).navigate(R.id.action_from_auth_to_home);
+                            if(user.getApprovementStatus()==null||business.getApprovementStatus().contains("inComplete")){
+                                NavDirections action = AuthenticationFragmentDirections.actionFromAuthToCompleteProfile().setUser(business);
+                                Navigation.findNavController(view).navigate(action);
+                            } else if(user.getApprovementStatus()!=null&&business.getApprovementStatus().contains("pending")){
+                                NavDirections action = AuthenticationFragmentDirections.actionFromAuthToShowAccountStatus().setIsVerified(false);
+                                Navigation.findNavController(view).navigate(action);
+                            } else {
+                                Navigation.findNavController(view).navigate(R.id.action_from_auth_to_home);
+                            }
+                        }else {/*You Need to register*/}
+
                     }
                 });
             }

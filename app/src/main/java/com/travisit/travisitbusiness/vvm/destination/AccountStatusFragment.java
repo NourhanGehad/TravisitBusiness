@@ -17,6 +17,7 @@ import com.travisit.travisitbusiness.databinding.FragmentResetPasswordCodeBindin
 import com.travisit.travisitbusiness.utils.SharedPrefManager;
 import com.travisit.travisitbusiness.vvm.AppActivity;
 import com.travisit.travisitbusiness.vvm.destination.CompleteProfileFragment;
+import com.travisit.travisitbusiness.vvm.observer.BaseBackPressedListener;
 
 public class AccountStatusFragment extends Fragment {
     public AccountStatusFragment() {
@@ -54,6 +55,7 @@ public class AccountStatusFragment extends Fragment {
         binding.layoutUnverified.layoutAccountUnverifiedBtnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //((AppActivity)getActivity()).setOnBackPressedListener(null);
                 preferences.logout();
                 Navigation.findNavController(getView()).navigate(R.id.action_from_account_status_to_auth_graph);
             }
@@ -69,5 +71,11 @@ public class AccountStatusFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //((AppActivity)getActivity()).setOnBackPressedListener(new BaseBackPressedListener(getActivity()));
     }
 }
