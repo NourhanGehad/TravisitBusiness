@@ -30,7 +30,7 @@ public class AppActivity extends AppCompatActivity implements BottomNavigationCo
     protected IOnBackPressed onBackPressedListener;
     NavHostFragment navHostFragment;
     Snackbar snackbar;
-    private IntentFilter internetIntentFilter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

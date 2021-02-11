@@ -20,7 +20,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     private final Context context;
     private List<Category> items;
     private SelectionPropagator observer;
-
     public CategoriesAdapter(List<Category> items, Context context, SelectionPropagator observer) {
         this.items = items;
         this.context = context;
@@ -28,9 +27,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     }
 
     @Override
-    public CategoryViewHolder onCreateViewHolder(ViewGroup parent,
-                                                 int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_summer_sky_chip, parent, false);
+    public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_summer_sky_chip, parent, false);
         return new CategoryViewHolder(view);
     }
 
@@ -52,7 +51,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         TextView category;
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            category = itemView.findViewById(R.id.item_blue_chip_tv_text);
+                category = itemView.findViewById(R.id.item_blue_chip_tv_text);
+            category.setBackground(context.getDrawable(R.drawable.summer_sky_blue_chip));
+            category.setTextColor(context.getColor(R.color.colorHeaderBlack));
 
         }
         public void set(Category item, Context context, SelectionPropagator observer) {
@@ -63,7 +64,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
                     Log.d("businessXX","clicked: "+item.getName() );
                     if(item.isSelected()){
                         category.setBackground(context.getDrawable(R.drawable.summer_sky_blue_chip));
-                        category.setTextColor(context.getColor(R.color.colorBorderSummerSky));
+                        category.setTextColor(context.getColor(R.color.colorHeaderBlack));
                         item.setSelected(false);
                     } else {
                         category.setBackground(context.getDrawable(R.drawable.summer_sky_blue_chip_selected));
@@ -71,6 +72,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
                         item.setSelected(true);
                     }
                     observer.chipSelected(item);
+
                 }
             });
         }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -63,7 +64,8 @@ public class AccountStatusFragment extends Fragment {
         binding.layoutVerified.layoutAccountVerifiedBtnGoToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                NavDirections action = AccountStatusFragmentDirections.actionFromAccountStatusToHome();
+                Navigation.findNavController(v).navigate(action);
             }
         });
     }

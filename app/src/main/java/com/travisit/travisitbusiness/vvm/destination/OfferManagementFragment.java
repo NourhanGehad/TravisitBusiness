@@ -41,7 +41,8 @@ import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
-public class OfferManagementFragment extends Fragment {
+public class
+OfferManagementFragment extends Fragment {
     private static final int REQUEST_FIRST_IMAGE = 127;
     private static final int REQUEST_SECOND_IMAGE = 128;
     private static final int REQUEST_THIRD_IMAGE = 129;
@@ -102,7 +103,7 @@ public class OfferManagementFragment extends Fragment {
             endDateCalendar.set(Calendar.YEAR, year);
             endDateCalendar.set(Calendar.MONTH, monthOfYear);
             endDateCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            binding.fOfferManagementTietStartDate.setText(sdf.format(endDateCalendar.getTime()));
+            binding.fOfferManagementTietEndDate.setText(sdf.format(endDateCalendar.getTime()));
         }
     };
     public OfferManagementFragment() {

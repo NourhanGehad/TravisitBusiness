@@ -1,11 +1,15 @@
 package com.travisit.travisitbusiness.model;
 
+
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Business implements Serializable {
+    @SerializedName("error")
+    private String error=null;
     @SerializedName("token")
     private String token = null;
     @SerializedName("id")
@@ -147,5 +151,13 @@ public class Business implements Serializable {
 
     public void setBranchesCount(Integer branchesCount) {
         this.branchesCount = branchesCount;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

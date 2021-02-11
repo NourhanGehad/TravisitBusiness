@@ -33,6 +33,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -46,6 +47,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.travisit.travisitbusiness.R;
 import com.travisit.travisitbusiness.data.Const;
 import com.travisit.travisitbusiness.databinding.FragmentMapsBinding;
@@ -53,9 +59,13 @@ import com.travisit.travisitbusiness.utils.IntentServices;
 import com.travisit.travisitbusiness.vvm.AppActivity;
 import com.travisit.travisitbusiness.vvm.vm.MapVM;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import static android.content.ContentValues.TAG;
 
 public class MapsFragment extends Fragment {
     private MapVM VM;
@@ -134,6 +144,9 @@ public class MapsFragment extends Fragment {
         myLocation=new LatLng(latLng.latitude,latLng.longitude);//passing location in Map
     }
     private void handleUserInteractions() {
+        binding.fMapLayoutActiveSearchBar.layoutSearchBarEtSearch.setTextColor(getActivity().getColor(R.color.colorSubHeaderBlack2));
+        binding.fMapLayoutInActiveSearchBar.layoutInactiveSearchBarTvSearch.setHint("Search Location");
+        binding.fMapLayoutActiveSearchBar.layoutSearchBarEtSearch.setHint("Search Location");
         binding.fMapLayoutInActiveSearchBar.layoutInactiveSearchBarTvSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,6 +158,29 @@ public class MapsFragment extends Fragment {
                 inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
             }
         });
+        binding.fMapLayoutActiveSearchBar.layoutSearchBarIvFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        binding.fMapLayoutActiveSearchBar.layoutSearchBarEtSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchGoogleLocation();
+            }
+        });
+        binding.fMapLayoutActiveSearchBar.layoutSearchBarEtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                  //  Toast.makeText(getActivity(), "Got the focus", Toast.LENGTH_LONG).show();
+                    searchGoogleLocation();
+                } else {
+                   // Toast.makeText(getActivity(), "Lost the focus", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         binding.fMapLayoutActiveSearchBar.layoutSearchBarEtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -153,22 +189,6 @@ public class MapsFragment extends Fragment {
                     return true;
                 }
                 return false;
-            }
-        });
-        binding.fMapLayoutActiveSearchBar.layoutSearchBarIvFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        binding.fMapLayoutActiveSearchBar.layoutSearchBarEtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    Toast.makeText(getActivity(), "Got the focus", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getActivity(), "Lost the focus", Toast.LENGTH_LONG).show();
-                }
             }
         });
         binding.fMapLayoutInActiveSearchBar.layoutInactiveSearchBarIvFilter.setVisibility(View.GONE);
@@ -290,7 +310,7 @@ public class MapsFragment extends Fragment {
                 getMyLocation();
                 Toast.makeText(getActivity(), "Granted", Toast.LENGTH_LONG).show();
             } else {
-             //Return to Home fragment
+                //Return to Home fragment
                 Toast.makeText(getActivity(), "Denied!!", Toast.LENGTH_LONG).show();
                 Navigation.findNavController(view).navigate(R.id.action_map_to_branch);
             }
@@ -327,5 +347,26 @@ public class MapsFragment extends Fragment {
                 binding.fMapLayoutInActiveSearchBar.layoutInactiveSearchBarTvSearch.setText(s);
             }
         });
+    }
+    private void searchGoogleLocation(){
+        Places.initialize(getActivity().getApplicationContext(),"AIzaSyArh72Mnyx-6RoNZ9KroZBON0p-_hfzHKc");
+        List<Place.Field>locationList= Arrays.asList(Place.Field.ADDRESS,Place.Field.LAT_LNG,Place.Field.NAME);
+        Intent intent=new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,locationList).build(getActivity());
+        startActivityForResult(intent,100);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==100&&resultCode==getActivity().RESULT_OK){
+            Place place=Autocomplete.getPlaceFromIntent(data);
+            String address=place.getAddress();
+            binding.fMapLayoutActiveSearchBar.layoutSearchBarEtSearch.setText(address);
+            performSearch();
+        }else if(requestCode==100&&resultCode== AutocompleteActivity.RESULT_ERROR){
+            //error
+            Status status=Autocomplete.getStatusFromIntent(data);
+            Log.e(TAG, "onActivityResult: "+status.getStatusMessage());
+        }
     }
 }

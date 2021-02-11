@@ -265,6 +265,12 @@ public class CompleteProfileFragment extends Fragment {
         binding.fCompleteProfileTietBusinessName.addTextChangedListener(watcher);
         binding.fCompleteProfileTietEmailAddress.addTextChangedListener(watcher);
         binding.fCompleteProfileTietGovernmentIssuedId.addTextChangedListener(watcher);
+        binding.fCompleteProfileIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
 /*

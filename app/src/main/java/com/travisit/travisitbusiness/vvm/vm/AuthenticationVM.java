@@ -1,6 +1,7 @@
 package com.travisit.travisitbusiness.vvm.vm;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,6 +13,7 @@ import com.travisit.travisitbusiness.model.forms.EmailForm;
 import com.travisit.travisitbusiness.model.forms.ResetPasswordForm;
 import com.travisit.travisitbusiness.model.forms.SignInForm;
 import com.travisit.travisitbusiness.model.forms.SignUpForm;
+import com.travisit.travisitbusiness.utils.TravisitApp;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -32,7 +34,14 @@ public class AuthenticationVM extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread());
 
         compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(observable.subscribe(o->businessMutableLiveData.setValue(o), e-> Log.d("PVMError",e.getMessage())));
+        compositeDisposable.add(observable.subscribe(o->{
+            if (o.getError()!=null){
+                Toast.makeText(TravisitApp.getAppINSTANCE().getApplicationContext(),o.getError(),Toast.LENGTH_LONG).show();
+            }else {
+                Toast.makeText(TravisitApp.getAppINSTANCE().getApplicationContext(),"Log In Successfully",Toast.LENGTH_LONG).show();
+                businessMutableLiveData.setValue(o);
+            }
+        }, e-> Log.d("PVMError",e.getMessage())));
     }
 
     public void RequestNewPasswordCode(String email){

@@ -17,7 +17,7 @@
         android:paddingBottom="10dp"
         android:paddingStart="25dp"
         android:paddingEnd="25dp"
-        android:enabled="false"
-        android:background="@drawable/green_chip" />
+        android:enabled="true"
+        android:background="@drawable/summer_sky_green_chip" />
 
 </FrameLayout>

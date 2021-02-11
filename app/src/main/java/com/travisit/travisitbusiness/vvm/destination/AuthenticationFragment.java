@@ -97,6 +97,7 @@ public class AuthenticationFragment extends Fragment {
         binding.fAuthBtnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("PVMError","ssssss");
                 vm.signInBusiness(getFieldText("email"), getFieldText("password"));
                 vm.businessMutableLiveData.observe(getActivity(), new Observer<Business>() {
                     @Override
@@ -105,17 +106,26 @@ public class AuthenticationFragment extends Fragment {
                             preferences.saveUser(business);
                             Client.reinstantiateClient(business.getToken());
                             //Navigation.findNavController(view).navigate(R.id.action_from_auth_to_home);
-                            if(user.getApprovementStatus()==null||business.getApprovementStatus().contains("inComplete")){
-                                NavDirections action = AuthenticationFragmentDirections.actionFromAuthToCompleteProfile().setUser(business);
-                                Navigation.findNavController(view).navigate(action);
-                            } else if(user.getApprovementStatus()!=null&&business.getApprovementStatus().contains("pending")){
-                                NavDirections action = AuthenticationFragmentDirections.actionFromAuthToShowAccountStatus().setIsVerified(false);
-                                Navigation.findNavController(view).navigate(action);
+                            if (business.getApprovementStatus() != null) {
+                                if (business.getApprovementStatus().contains("inComplete")) {
+                                    NavDirections action = AuthenticationFragmentDirections.actionFromAuthToCompleteProfile().setUser(business);
+                                    Navigation.findNavController(view).navigate(action);
+                                } else if (business.getApprovementStatus().contains("pending")) {
+                                    NavDirections action = AuthenticationFragmentDirections.actionFromAuthToShowAccountStatus().setIsVerified(false);
+                                    Navigation.findNavController(view).navigate(action);
+                                } else {
+
+                                    if (business.getBranchesCount() == null || business.getBranchesCount() < 1) {
+                                        NavDirections action = AuthenticationFragmentDirections.actionFromAuthToShowAccountStatus().setIsVerified(true);
+                                        Navigation.findNavController(view).navigate(action);
+                                    } else {
+                                        Navigation.findNavController(view).navigate(R.id.action_from_auth_to_home);
+                                    }
+                                }
                             } else {
                                 Navigation.findNavController(view).navigate(R.id.action_from_auth_to_home);
                             }
                         }else {/*You Need to register*/}
-
                     }
                 });
             }

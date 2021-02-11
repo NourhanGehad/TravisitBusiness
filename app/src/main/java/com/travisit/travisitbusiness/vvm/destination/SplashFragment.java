@@ -26,6 +26,8 @@ import com.travisit.travisitbusiness.vvm.vm.BranchesVM;
 
 public class SplashFragment extends Fragment {
     private FragmentSplashBinding binding;
+    Business user;
+    View view;
     public SplashFragment() {
         // Required empty public constructor
     }
@@ -34,7 +36,7 @@ public class SplashFragment extends Fragment {
                              Bundle savedInstanceState) {
         ((AppActivity) getActivity()).changeBottomNavVisibility(View.GONE, false);
         binding = FragmentSplashBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
+        view = binding.getRoot();
         return view;
     }
     @Override
@@ -43,37 +45,17 @@ public class SplashFragment extends Fragment {
         Animation aniFade = AnimationUtils.loadAnimation(getActivity(),R.anim.fade_in);
         binding.fSplashIvLogo.startAnimation(aniFade);
         binding.fSplashTvAppName.startAnimation(aniFade);
-
-        Business user = new SharedPrefManager(getActivity()).getUser();
-        if(user != null){
-            String userToken =  user.getToken();
-            if(userToken != null) {
-                Client.reinstantiateClient(
-                        userToken
-                );
-            }
-        }
-
+        getUserFromShared();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 //                Navigation.findNavController(getView()).navigate(R.id.action_from_splash_to_auth_graph);
                /* Log.d("wtf",userToken);*/
-                 if(user != null){
-                     Log.e("TAAAG",user.getApprovementStatus());
-                    if(user.getApprovementStatus()!=null&&user.getApprovementStatus().contains("inComplete")){
-                        NavDirections action = SplashFragmentDirections.actionFromSplashToCompleteProfile().setUser(user);
-                        Navigation.findNavController(view).navigate(action);
-                    } else if(user.getApprovementStatus()!=null&&user.getApprovementStatus().contains("pending")){
-                        NavDirections action = SplashFragmentDirections.actionFromSplashToShowAccountStatus().setIsVerified(false);
-                        Navigation.findNavController(view).navigate(action);
-                    } else {
-                        Log.e("fdfsdadfdfdfsd","fsdfsdadfdfsda");
-                        Navigation.findNavController(getView()).navigate(R.id.action_from_splash_to_home);
-                    }
-                } else {
-                    Navigation.findNavController(getView()).navigate(R.id.action_from_splash_to_auth_graph);
+                try { // if We press back during delay it will crashed
+                    navigation();
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         }, 1500);
@@ -88,5 +70,37 @@ public class SplashFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+    private void getUserFromShared(){
+        user = new SharedPrefManager(getActivity()).getUser();
+        if(user != null){
+            String userToken =  user.getToken();
+            if(userToken != null) {
+                Client.reinstantiateClient(userToken);
+            }
+        }
+    }
+    private void navigation(){
+        if(user != null){
+            Log.e("TAAAG",user.getApprovementStatus());
+            if (user.getApprovementStatus() != null) {
+                if (user.getApprovementStatus().contains("inComplete")) {
+                    NavDirections action = SplashFragmentDirections.actionFromSplashToCompleteProfile().setUser(user);
+                    Navigation.findNavController(view).navigate(action);
+                } else if (user.getApprovementStatus().contains("pending")) {
+                    NavDirections action = SplashFragmentDirections.actionFromSplashToShowAccountStatus().setIsVerified(false);;
+                    Navigation.findNavController(view).navigate(action);
+                } else {
+                    //Navigation.findNavController(getView()).navigate(R.id.action_from_splash_to_home);
+                    if (user.getBranchesCount() == null || user.getBranchesCount() < 1) {
+                        NavDirections action = SplashFragmentDirections.actionFromSplashToShowAccountStatus().setIsVerified(true);
+                        Navigation.findNavController(view).navigate(action);
+                    } else {
+                        Navigation.findNavController(getView()).navigate(R.id.action_from_splash_to_home);
+                    }
+                }
+            }         } else {
+            Navigation.findNavController(getView()).navigate(R.id.action_from_splash_to_auth_graph);
+        }
     }
 }

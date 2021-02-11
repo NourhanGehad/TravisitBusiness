@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/businessPaymantsListFragment">
     <action
         android:id="@+id/action_to_add_offer"
         app:destination="@id/offerManagementFragment"
@@ -16,7 +16,6 @@
         app:enterAnim="@anim/slide_from_out_right_to_center"
         app:exitAnim="@anim/slide_from_center_to_out_left">
     </action>
-
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.travisit.travisitbusiness.vvm.destination.SplashFragment"
@@ -324,6 +323,13 @@
             app:exitAnim="@anim/slide_from_center_to_out_left"
             app:popUpTo="@id/app_nav_graph"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_from_account_status_to_home"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_from_out_right_to_center"
+            app:exitAnim="@anim/slide_from_center_to_out_left"
+            app:popUpTo="@id/app_nav_graph"
+            app:popUpToInclusive="false"/>
     </fragment>
     <fragment
         android:id="@+id/offerDetailsFragment"
@@ -417,4 +423,14 @@
                 android:defaultValue="@null" />
         </action>
     </fragment>
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.travisit.travisitbusiness.vvm.observer.FilterFragment"
+        android:label="fragment_filter"
+        tools:layout="@layout/fragment_filter" />
+    <fragment
+        android:id="@+id/businessPaymantsListFragment"
+        android:name="com.travisit.travisitbusiness.BusinessPaymantsListFragment"
+        android:label="fragment_business_paymants_list"
+        tools:layout="@layout/fragment_business_paymants_list" />
 </navigation>

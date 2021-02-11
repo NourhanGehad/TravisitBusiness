@@ -24,23 +24,27 @@ public class RegistrationVM extends ViewModel {
     public MutableLiveData<Business> businessTokenLiveData = new MutableLiveData<>();
     CompositeDisposable compositeDisposable;
     public void signUpBusiness(String name, String email, String password){
+        Log.e("PVMError","ssssss");
         SignUpForm signUpForm = new SignUpForm(name, email, password);
         Observable<Business> observable = Client.getINSTANCE().signUp(signUpForm)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-
         compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(observable.subscribe(o->setBusinessToken(o), e-> Log.d("PVMError",e.fillInStackTrace().toString())));
+        compositeDisposable.add(observable.subscribe(o->{
+                    Log.e("PVMError","ssssss");
+            if (o.getError()!=null){
+                Log.e("PVMError","Error");
+                Toast.makeText(TravisitApp.getAppINSTANCE().getApplicationContext(),o.getError(),Toast.LENGTH_LONG).show();
+            }else {
+                Log.e("PVMError","Done");
+                Toast.makeText(TravisitApp.getAppINSTANCE().getApplicationContext(),"Sign Up Successfully",Toast.LENGTH_LONG).show();
+                businessTokenLiveData.setValue(o);
+            }
+        }, e-> {   Toast.makeText(TravisitApp.getAppINSTANCE().getApplicationContext(), "Please Check Internet Connection", Toast.LENGTH_SHORT).show();
+            Log.e("PVMError",e.getMessage().toString());}
+            ));
     }
-    private void setBusinessToken(Business business){
-     //   Log.e("333332233232",Object.toString());
-      //  Business business=new Business(Object.get(0).get("token").getAsString(),Object.get(0).get("name").getAsString(),Object.get(0).get("email").getAsString());
-        if (business.getEmail()==null||business.getEmail().isEmpty()){
-            Toast.makeText(TravisitApp.getAppINSTANCE().getApplicationContext(),"This Email is Already Exist",Toast.LENGTH_LONG);
-        }else {
-            businessTokenLiveData.setValue(business);
-        }
-    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
